@@ -1,6 +1,6 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
 package view;
 
@@ -8,13 +8,73 @@ package view;
  *
  * @author rafaela.armiliato
  */
-public class ListagemMateria extends javax.swing.JFrame {
+public class ListagemMateria extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form ListagemMateria
      */
     public ListagemMateria() {
+        this("", "");
+    }
+
+    /**
+     * Cria a listagem já filtrada pelo intervalo de códigos informado na tela
+     * de opções do relatório. Intervalo vazio lista todas as matérias primas.
+     */
+    public ListagemMateria(String codigoDe, String codigoAte) {
         initComponents();
+        carregarTabela(codigoDe, codigoAte);
+    }
+
+    /**
+     * Busca as matérias primas e preenche a tabela aplicando o filtro.
+     */
+    private void carregarTabela(String codigoDe, String codigoAte) {
+        javax.swing.table.DefaultTableModel modelo = new javax.swing.table.DefaultTableModel(
+                new String[]{"Registro", "Código", "Produto", "Unidade", "Custo", "Reposição"}, 0) {
+            @Override
+            public boolean isCellEditable(int linha, int coluna) {
+                return false;
+            }
+        };
+        dao.DataSource dataSource = new dao.DataSource();
+        try {
+            for (model.MateriaPrima materia : new dao.MateriaPrimaDAO(dataSource).listarTodos()) {
+                if (dentroDoIntervalo(materia.getCodigo(), codigoDe, codigoAte)) {
+                    modelo.addRow(new Object[]{
+                        materia.getId(),
+                        materia.getCodigo(),
+                        materia.getNome(),
+                        materia.getUnidade(),
+                        materia.getCustoReposicao(),
+                        materia.getQuantidadeEstoque()
+                    });
+                }
+            }
+        } catch (java.sql.SQLException ex) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Erro ao carregar a listagem: " + ex.getMessage(),
+                    "Listagem de matéria prima", javax.swing.JOptionPane.ERROR_MESSAGE);
+        } finally {
+            dataSource.CloseDataSource();
+        }
+        jTable1.setModel(modelo);
+        if (modelo.getRowCount() == 0) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Nenhuma matéria prima encontrada para o filtro informado.",
+                    "Listagem de matéria prima", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    private boolean dentroDoIntervalo(String codigo, String codigoDe, String codigoAte) {
+        if (codigoDe == null || codigoDe.isEmpty() || codigoAte == null || codigoAte.isEmpty()) {
+            return true;
+        }
+        if (codigo == null) {
+            return false;
+        }
+        return codigo.compareToIgnoreCase(codigoDe) >= 0
+                && codigo.compareToIgnoreCase(codigoAte) <= 0;
     }
 
     /**
@@ -30,7 +90,11 @@ public class ListagemMateria extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
+        setTitle("Listagem de matéria prima");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -47,7 +111,7 @@ public class ListagemMateria extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Listagem de Matéria");
+        jLabel1.setText("Listagem de matéria prima");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -71,40 +135,6 @@ public class ListagemMateria extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ListagemMateria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ListagemMateria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ListagemMateria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ListagemMateria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ListagemMateria().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;

@@ -216,7 +216,7 @@ public class menu extends javax.swing.JFrame {
         jMenuItem9.addActionListener(this::jMenuItem9ActionPerformed);
         jMenu2.add(jMenuItem9);
 
-        jMenuItem10.setText("Dispesas com vendas");
+        jMenuItem10.setText("Despesas com vendas");
         jMenuItem10.addActionListener(this::jMenuItem10ActionPerformed);
         jMenu2.add(jMenuItem10);
 
@@ -244,6 +244,7 @@ public class menu extends javax.swing.JFrame {
         jMenu3.add(jMenuItem15);
 
         jMenuItem16.setText("Listagem de produtos acabados");
+        jMenuItem16.addActionListener(this::jMenuItem16ActionPerformed);
         jMenu3.add(jMenuItem16);
 
         jMenuItem17.setText("Listagem de preços");
@@ -254,9 +255,11 @@ public class menu extends javax.swing.JFrame {
         jMenu3.add(jMenuItem18);
 
         jMenuItem19.setText("Previsão de custos fixos");
+        jMenuItem19.addActionListener(this::jMenuItem19ActionPerformed);
         jMenu3.add(jMenuItem19);
 
         jMenuItem20.setText("Previsão de reposição em estoque");
+        jMenuItem20.addActionListener(this::jMenuItem20ActionPerformed);
         jMenu3.add(jMenuItem20);
 
         jMenuBar1.add(jMenu3);
@@ -306,7 +309,7 @@ public class menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        abrir(new Cadastro_de_ProdutosPrimarios());
+        abrir(new CadastroProdutosPrimarios());
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -314,39 +317,39 @@ public class menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        abrir(new Cadastro_de_ProdutosPrimarios());
+        abrir(new CadastroProdutosPrimarios());
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        abrir(new Investimento_fixo());
+        abrir(new CadastroInvestimentoFixo());
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        abrir(new Cadastros_contasGerais());
+        abrir(new CadastroContasGastosGerais());
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-        abrir(new Cadastro_CentroCusto());
+        abrir(new CadastroCentroCustos());
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
-        abrir(new Previsão_ReposicaoEstoque());
+        abrir(new CadastroPrevisaoReposicaoEstoque());
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
-        abrir(new CustoFabrica());
+        abrir(new CadastroCustoPorHora());
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
-        abrir(new FormdespVenda());
+        abrir(new CadastroDespesasComVendas());
     }//GEN-LAST:event_jMenuItem10ActionPerformed
 
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
-        abrir(new PrevisaoCustosFixos());
+        abrir(new CadastroPrevisaoCustosFixos());
     }//GEN-LAST:event_jMenuItem11ActionPerformed
 
     private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
-        abrir(new CapitaldeGiro());
+        abrir(new CadastroCapitalDeGiro());
     }//GEN-LAST:event_jMenuItem12ActionPerformed
 
     private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
@@ -354,23 +357,23 @@ public class menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
     private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
-        abrir(new Listagem_MateriaPrima());
+        abrir(new ListagemMateriaPrima());
     }//GEN-LAST:event_jMenuItem15ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        abrir(new Investimento_fixo());
+        abrir(new CadastroInvestimentoFixo());
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        abrir(new Cadastros_contasGerais());
+        abrir(new CadastroContasGastosGerais());
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        abrir(new Cadastro_CentroCusto());
+        abrir(new CadastroCentroCustos());
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        abrir(new FormdespVenda());
+        abrir(new CadastroDespesasComVendas());
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
@@ -378,8 +381,21 @@ public class menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem18ActionPerformed
-        // TODO add your handling code here:
+        abrir(new ListagemContasGastosGerais());
     }//GEN-LAST:event_jMenuItem18ActionPerformed
+
+
+    private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
+        abrir(new ListagemProdutosAcabados());
+    }//GEN-LAST:event_jMenuItem16ActionPerformed
+
+    private void jMenuItem19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem19ActionPerformed
+        abrir(new ListagemPrevisaoCustosFixos());
+    }//GEN-LAST:event_jMenuItem19ActionPerformed
+
+    private void jMenuItem20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem20ActionPerformed
+        abrir(new ListagemPrevisaoReposicaoEstoque());
+    }//GEN-LAST:event_jMenuItem20ActionPerformed
 
     /**
      * @param args the command line arguments

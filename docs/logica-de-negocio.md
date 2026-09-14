@@ -270,7 +270,7 @@ vezes; se a quantidade mudou, altera-se a linha existente.
 
 | Item de menu | Tela | Tabela | Situação |
 |---|---|---|---|
-| Produtos primários | `Cadastro_de_ProdutosPrimarios` | `produtos_primarios` | tela crua |
+| Produtos primários | `CadastroProdutosPrimarios` | `materia_prima` | tela crua |
 | Investimento fixo | `Investimento_fixo` | `investimento_fixo` | tela crua |
 | Contas de gastos gerais | `Cadastros_contasGerais` | `gastos_gerais` | tela crua |
 | **Centro de custos** | `Cadastro_CentroCusto` | `centro_custo` | **em andamento** |
@@ -304,6 +304,14 @@ Os 16 models e 16 DAOs estão completos e compilando.
    `custo_por_hora` já gravado fica desatualizado. Falta decidir entre recalcular
    na hora, avisar, ou calcular sempre na leitura.
 6. **Label errado** em `Cadastros_contasGerais` ("Tipo Investimento").
+7. ~~**Cadastro duplicado**: `produtos_primarios` e `materia_prima` eram a
+   mesma coisa cadastrada duas vezes (mesmo codigo/nome/unidade/custo, só a
+   coluna de quantidade com nomes diferentes).~~ **Corrigido** — unificado em
+   `materia_prima` (nota 29 do schema); `composicao_materia_prima` agora
+   referencia `id_materia_prima` em vez de `id_produto_primario`. A tela
+   `CadastroProdutosPrimarios` continua com o nome/título antigos e precisa
+   ser revisada para cadastrar em `materia_prima` (hoje é tela crua, sem DAO
+   ligado, então nada quebrou).
 
 ---
 
@@ -326,7 +334,7 @@ Equivalência de tabelas:
 
 | Livro | Porte |
 |---|---|
-| `ProdPrim.DBF` | `produtos_primarios` |
+| `ProdPrim.DBF` | `materia_prima` *(era `produtos_primarios`, unificada — nota 29)* |
 | `InvFixo.DBF` | `investimento_fixo` |
 | `ContaCf.DBF` | `gastos_gerais` |
 | `CentroCusto.dbf` | `centro_custo` |

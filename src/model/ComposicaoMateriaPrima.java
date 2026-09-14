@@ -9,7 +9,7 @@ public class ComposicaoMateriaPrima {
 
     private int id;
     private int idProdutoVenda;
-    private int idProdutoPrimario;
+    private int idMateriaPrima;
     private BigDecimal quantidade;
     private BigDecimal custoReposicao;
     private BigDecimal total;  // calculada pelo banco
@@ -17,9 +17,9 @@ public class ComposicaoMateriaPrima {
     public ComposicaoMateriaPrima() {
     }
 
-    public ComposicaoMateriaPrima(int idProdutoVenda, int idProdutoPrimario, BigDecimal quantidade, BigDecimal custoReposicao) {
+    public ComposicaoMateriaPrima(int idProdutoVenda, int idMateriaPrima, BigDecimal quantidade, BigDecimal custoReposicao) {
         this.idProdutoVenda = idProdutoVenda;
-        this.idProdutoPrimario = idProdutoPrimario;
+        this.idMateriaPrima = idMateriaPrima;
         this.quantidade = quantidade;
         this.custoReposicao = custoReposicao;
     }
@@ -40,12 +40,12 @@ public class ComposicaoMateriaPrima {
         this.idProdutoVenda = idProdutoVenda;
     }
 
-    public int getIdProdutoPrimario() {
-        return idProdutoPrimario;
+    public int getIdMateriaPrima() {
+        return idMateriaPrima;
     }
 
-    public void setIdProdutoPrimario(int idProdutoPrimario) {
-        this.idProdutoPrimario = idProdutoPrimario;
+    public void setIdMateriaPrima(int idMateriaPrima) {
+        this.idMateriaPrima = idMateriaPrima;
     }
 
     public BigDecimal getQuantidade() {
@@ -74,6 +74,6 @@ public class ComposicaoMateriaPrima {
 
     @Override
     public String toString() {
-        return "ComposicaoMateriaPrima{" + "id=" + id + ", idProdutoVenda=" + idProdutoVenda + ", idProdutoPrimario=" + idProdutoPrimario + ", quantidade=" + quantidade + ", custoReposicao=" + custoReposicao + ", total=" + total + "}";
+        return "ComposicaoMateriaPrima{" + "id=" + id + ", idProdutoVenda=" + idProdutoVenda + ", idMateriaPrima=" + idMateriaPrima + ", quantidade=" + quantidade + ", custoReposicao=" + custoReposicao + ", total=" + total + "}";
     }
 }
