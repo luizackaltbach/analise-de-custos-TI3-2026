@@ -2,9 +2,11 @@
 --  ANÁLISE DE CUSTOS — schema MySQL
 --  Porte do sistema Delphi/dBASE de Paulo Roberto Munhoz
 -- =====================================================================
--- (*) Schema simplificado: restrições de integridade (NOT NULL, UNIQUE,
---     FOREIGN KEY) e cálculos (colunas antes GENERATED) foram removidos
---     daqui. Serão reimplementados manualmente em Java futuramente.
+-- (*) Schema simplificado: restrições de NOT NULL e UNIQUE KEY, e os
+--     cálculos (colunas antes GENERATED) foram removidos daqui e serão
+--     reimplementados manualmente em Java futuramente. As referências
+--     entre tabelas ficam como REFERENCES inline na própria coluna,
+--     sem CONSTRAINT nomeada e sem ON DELETE CASCADE.
 
 DROP DATABASE IF EXISTS analise_custos;
 CREATE DATABASE analise_custos
@@ -77,7 +79,7 @@ CREATE TABLE previsao_reposicao_estoque (
   id               INT           AUTO_INCREMENT,
   competencia      DATE,                -- (9) substitui mes+ano
   sequencia        INT           DEFAULT 1,
-  id_materia_prima INT,
+  id_materia_prima INT REFERENCES materia_prima(id),
   quantidade       DECIMAL(12,3) DEFAULT 0,
   custo_reposicao  DECIMAL(13,4) DEFAULT 0,      -- (10) cópia histórica, não FK
   outros_gastos    DECIMAL(13,2) DEFAULT 0,
@@ -89,8 +91,8 @@ CREATE TABLE previsao_reposicao_estoque (
 
 CREATE TABLE custo_por_hora (
   id              INT           AUTO_INCREMENT,
-  id_centro_custo INT,                 -- (12) era VARCHAR digitado, virou coluna int
-  id_gasto_geral  INT,                 -- (12) era VARCHAR digitado, virou coluna int
+  id_centro_custo INT REFERENCES centro_custo(id),   -- (12) era VARCHAR digitado, virou coluna int
+  id_gasto_geral  INT REFERENCES gastos_gerais(id),  -- (12) era VARCHAR digitado, virou coluna int
   valor           DECIMAL(13,2) DEFAULT 0,
   custo_minuto    DECIMAL(13,6) DEFAULT 0,       -- (13) 6 casas: erro se multiplica
   PRIMARY KEY (id)
@@ -102,8 +104,8 @@ CREATE TABLE previsao_custos_fixos (
   id              INT           AUTO_INCREMENT,
   competencia     DATE,
   sequencia       INT           DEFAULT 1,
-  id_gasto_geral  INT,
-  id_centro_custo INT,
+  id_gasto_geral  INT REFERENCES gastos_gerais(id),
+  id_centro_custo INT REFERENCES centro_custo(id),
   valor           DECIMAL(13,2) DEFAULT 0,
   PRIMARY KEY (id),
   KEY idx_pcf_competencia (competencia)
@@ -135,8 +137,8 @@ CREATE TABLE produtos_para_venda (
 
 CREATE TABLE composicao_materia_prima (
   id               INT           AUTO_INCREMENT,
-  id_produto_venda INT,
-  id_materia_prima INT,                -- era id_produto_primario (nota 15)
+  id_produto_venda INT REFERENCES produtos_para_venda(id),
+  id_materia_prima INT REFERENCES materia_prima(id),  -- era id_produto_primario (nota 15)
   quantidade       DECIMAL(12,3) DEFAULT 0,
   custo_reposicao  DECIMAL(13,4) DEFAULT 0,       -- cópia histórica
   total DECIMAL(13,2),                            -- antes calculada (GENERATED); agora gravada pela aplicação
@@ -147,8 +149,8 @@ CREATE TABLE composicao_materia_prima (
 
 CREATE TABLE composicao_centro_custo (
   id               INT           AUTO_INCREMENT,
-  id_produto_venda INT,
-  id_centro_custo  INT,
+  id_produto_venda INT REFERENCES produtos_para_venda(id),
+  id_centro_custo  INT REFERENCES centro_custo(id),
   tempo_minutos    DECIMAL(9,2)  DEFAULT 0,      -- (20) unidade explícita no nome
   custo_minuto     DECIMAL(13,6) DEFAULT 0,      -- cópia histórica
   total DECIMAL(13,2),                           -- antes calculada (GENERATED); agora gravada pela aplicação
@@ -179,7 +181,7 @@ CREATE TABLE cadastro_estoque (
 CREATE TABLE resultado_administrativo (
   id               INT      AUTO_INCREMENT,
   data_calculo     DATETIME DEFAULT CURRENT_TIMESTAMP,  -- (22) foto datada
-  id_produto_venda INT,
+  id_produto_venda INT REFERENCES produtos_para_venda(id),
 
   -- (23) nome/código/unidade ficam DUPLICADOS de propósito.
   --      Num snapshot isso é correto: se o produto for renomeado depois,
@@ -222,7 +224,7 @@ CREATE TABLE resultado_administrativo (
 
 CREATE TABLE resultado_grafico (
   id              INT           AUTO_INCREMENT,
-  id_resultado    INT,                 -- (27) pendura no snapshot pai
+  id_resultado    INT REFERENCES resultado_administrativo(id),  -- (27) pendura no snapshot pai
   quantidade_venda DECIMAL(13,2) DEFAULT 0,
   receita_total   DECIMAL(13,2) DEFAULT 0,
   custo_total     DECIMAL(13,2) DEFAULT 0,
