@@ -9,6 +9,11 @@ import dao.CentroCustoDAO;
 import dao.DataSource;
 import javax.swing.JOptionPane;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import javax.swing.table.DefaultTableModel;
 import model.CentroCusto;
 
 /**
@@ -21,8 +26,9 @@ public class CadastroCentroCustos extends javax.swing.JInternalFrame {
     /**
      * Creates new form CadastroInvestimentoFixo
      */
-    public CadastroCentroCustos() {
+    public CadastroCentroCustos() throws SQLException {
         initComponents();
+        carregarTabela();
     }
 
     /**
@@ -148,6 +154,11 @@ public class CadastroCentroCustos extends javax.swing.JInternalFrame {
                 "Centro Custo", "Horas Efetivas"
             }
         ));
+        tabela.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabela);
 
         jScrollPane2.setViewportView(jScrollPane1);
@@ -196,16 +207,57 @@ public class CadastroCentroCustos extends javax.swing.JInternalFrame {
         try {
         dao.inserir(centroCusto);
         JOptionPane.showMessageDialog(this, "Centro de custo cadastrado com sucesso!");
+        carregarTabela();
         } catch (SQLException e) {
         JOptionPane.showMessageDialog(this, "Erro ao cadastrar: " + e.getMessage());
 }
     }//GEN-LAST:event_incluirBotaoActionPerformed
 
     private void atualizarBotaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atualizarBotaoActionPerformed
+       DataSource dataSource = new DataSource();
+       CentroCustoDAO dao = new CentroCustoDAO(dataSource);
+       int linha = tabela.getSelectedRow();
+       CentroCusto c = centroCusto.get(linha);
+       
+       c.setNome(nomeTexto.getText());
+       c.setHorasEfetivas(Integer.parseInt(horasEfetivasTexto.getText()));
         
+        
+        try {
+        dao.alterar(c);
+        JOptionPane.showMessageDialog(this, "Centro de custo atualizado com sucesso!");
+        carregarTabela();
+        } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "Erro ao atualizar: " + e.getMessage());
+        }
     }//GEN-LAST:event_atualizarBotaoActionPerformed
 
-
+    private void tabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMouseClicked
+         int linha = tabela.getSelectedRow();
+        
+        CentroCusto c = centroCusto.get(linha);
+        nomeTexto.setText(c.getNome());
+        horasEfetivasTexto.setText(String.valueOf(c.getHorasEfetivas()));
+        
+    }//GEN-LAST:event_tabelaMouseClicked
+    List<CentroCusto> centroCusto = new ArrayList<>();
+    
+    public void carregarTabela() throws SQLException{
+       DataSource dataSource = new DataSource();
+       CentroCustoDAO dao = new CentroCustoDAO(dataSource);
+       
+       centroCusto = dao.listarTodos();
+       DefaultTableModel model = (DefaultTableModel) tabela.getModel();
+       model.setRowCount(0);
+       for(CentroCusto c : centroCusto){
+           model.addRow(new Object[]{
+               c.getNome(), c.getHorasEfetivas()
+           });
+       }
+       
+       
+       
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton atualizarBotao;
     private javax.swing.JButton excluirBotao;
