@@ -9,13 +9,13 @@ package view;
  *
  * @author natal
  */
-public class Cadastros_contasGerais extends javax.swing.JInternalFrame {
+public class Cadastros_GastosGerais extends javax.swing.JInternalFrame {
     
 
     /**
      * Creates new form Investimento_fixo
      */
-    public Cadastros_contasGerais() {
+    public Cadastros_GastosGerais() {
         initComponents();
     }
 
@@ -78,7 +78,7 @@ public class Cadastros_contasGerais extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
-        setTitle("Cadastro de contas de gastos gerais");
+        setTitle("Cadastro de gastos gerais");
 
         jButton12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/feito v.png"))); // NOI18N
         jButton12.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
