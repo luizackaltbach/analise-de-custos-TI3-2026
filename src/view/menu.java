@@ -297,11 +297,6 @@ public class menu extends javax.swing.JFrame {
     private void abrir(javax.swing.JInternalFrame tela) {
         jDesktopPane1.add(tela);
         tela.setVisible(true);
-        try {
-            tela.setSelected(true);
-        } catch (java.beans.PropertyVetoException ex) {
-            logger.log(java.util.logging.Level.WARNING, null, ex);
-        }
     }
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
@@ -377,7 +372,7 @@ public class menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        // TODO add your handling code here:
+        abrir(new CadastroComposicaoProdutos());
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem18ActionPerformed
