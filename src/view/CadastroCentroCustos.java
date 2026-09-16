@@ -7,6 +7,8 @@ package view;
 
 import dao.CentroCustoDAO;
 import dao.DataSource;
+import javax.swing.JOptionPane;
+import java.sql.SQLException;
 import model.CentroCusto;
 
 /**
@@ -87,6 +89,7 @@ public class CadastroCentroCustos extends javax.swing.JInternalFrame {
         incluirBotao.addActionListener(this::incluirBotaoActionPerformed);
 
         atualizarBotao.setText("Atualizar");
+        atualizarBotao.addActionListener(this::atualizarBotaoActionPerformed);
 
         excluirBotao.setText("Excluir");
 
@@ -188,11 +191,19 @@ public class CadastroCentroCustos extends javax.swing.JInternalFrame {
         
         DataSource dataSource = new DataSource();
         CentroCustoDAO dao = new CentroCustoDAO(dataSource);
-        
         CentroCusto centroCusto = new CentroCusto(nome, horasEfetivas);
         
+        try {
         dao.inserir(centroCusto);
+        JOptionPane.showMessageDialog(this, "Centro de custo cadastrado com sucesso!");
+        } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "Erro ao cadastrar: " + e.getMessage());
+}
     }//GEN-LAST:event_incluirBotaoActionPerformed
+
+    private void atualizarBotaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atualizarBotaoActionPerformed
+        
+    }//GEN-LAST:event_atualizarBotaoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
