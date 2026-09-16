@@ -22,11 +22,10 @@ public class CentroCustoDAO {
     public void inserir(CentroCusto obj) throws SQLException {
         String sql = "INSERT INTO centro_custo (nome, horas_efetivas) VALUES (?, ?)";
         Connection con = dataSource.getConnection();
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, obj.getNome());
             ps.setInt(2, obj.getHorasEfetivas());
             ps.executeUpdate();
-        }
     }
 
     public void alterar(CentroCusto obj) throws SQLException {
