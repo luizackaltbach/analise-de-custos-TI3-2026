@@ -1,17 +1,21 @@
 USE analise_custos;
 
-DELETE FROM resultado_administrativo;
-DELETE FROM composicao_centro_custo;
-DELETE FROM composicao_materia_prima;
-DELETE FROM produtos_para_venda;
-DELETE FROM previsao_custos_fixos;
-DELETE FROM previsao_reposicao_estoque;
-DELETE FROM capital_de_giro;
-DELETE FROM despesas_com_vendas;
-DELETE FROM centro_custo;
-DELETE FROM gastos_gerais;
-DELETE FROM investimento_fixo;
-DELETE FROM materia_prima;
+SET FOREIGN_KEY_CHECKS = 0;
+
+TRUNCATE TABLE resultado_administrativo;
+TRUNCATE TABLE composicao_centro_custo;
+TRUNCATE TABLE composicao_materia_prima;
+TRUNCATE TABLE produtos_para_venda;
+TRUNCATE TABLE previsao_custos_fixos;
+TRUNCATE TABLE previsao_reposicao_estoque;
+TRUNCATE TABLE capital_de_giro;
+TRUNCATE TABLE despesas_com_vendas;
+TRUNCATE TABLE centro_custo;
+TRUNCATE TABLE gastos_gerais;
+TRUNCATE TABLE investimento_fixo;
+TRUNCATE TABLE materia_prima;
+
+SET FOREIGN_KEY_CHECKS = 1;
 
 INSERT INTO materia_prima (codigo, nome, unidade, custo_reposicao) VALUES
 ('MAD001', 'Madeira pinus', 'Kg',  12.5000),
