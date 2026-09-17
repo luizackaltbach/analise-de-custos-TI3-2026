@@ -1,6 +1,5 @@
 package model;
 
-import java.math.BigDecimal;
 
 /**
  * Entidade da tabela cadastro_estoque.
@@ -11,18 +10,18 @@ public class CadastroEstoque {
     private String codigo;
     private String produto;
     private String unidade;
-    private BigDecimal quantidadeAnterior;
-    private BigDecimal quantidade;
-    private BigDecimal custoAnterior;
-    private BigDecimal custo;
-    private BigDecimal custoMedio;
-    private BigDecimal venda;
-    private BigDecimal total;
+    private double quantidadeAnterior;
+    private double quantidade;
+    private double custoAnterior;
+    private double custo;
+    private double custoMedio;
+    private double venda;
+    private double total;
 
     public CadastroEstoque() {
     }
 
-    public CadastroEstoque(String codigo, String produto, String unidade, BigDecimal quantidadeAnterior, BigDecimal quantidade, BigDecimal custoAnterior, BigDecimal custo, BigDecimal custoMedio, BigDecimal venda, BigDecimal total) {
+    public CadastroEstoque(String codigo, String produto, String unidade, double quantidadeAnterior, double quantidade, double custoAnterior, double custo, double custoMedio, double venda, double total) {
         this.codigo = codigo;
         this.produto = produto;
         this.unidade = unidade;
@@ -67,59 +66,59 @@ public class CadastroEstoque {
         this.unidade = unidade;
     }
 
-    public BigDecimal getQuantidadeAnterior() {
+    public double getQuantidadeAnterior() {
         return quantidadeAnterior;
     }
 
-    public void setQuantidadeAnterior(BigDecimal quantidadeAnterior) {
+    public void setQuantidadeAnterior(double quantidadeAnterior) {
         this.quantidadeAnterior = quantidadeAnterior;
     }
 
-    public BigDecimal getQuantidade() {
+    public double getQuantidade() {
         return quantidade;
     }
 
-    public void setQuantidade(BigDecimal quantidade) {
+    public void setQuantidade(double quantidade) {
         this.quantidade = quantidade;
     }
 
-    public BigDecimal getCustoAnterior() {
+    public double getCustoAnterior() {
         return custoAnterior;
     }
 
-    public void setCustoAnterior(BigDecimal custoAnterior) {
+    public void setCustoAnterior(double custoAnterior) {
         this.custoAnterior = custoAnterior;
     }
 
-    public BigDecimal getCusto() {
+    public double getCusto() {
         return custo;
     }
 
-    public void setCusto(BigDecimal custo) {
+    public void setCusto(double custo) {
         this.custo = custo;
     }
 
-    public BigDecimal getCustoMedio() {
+    public double getCustoMedio() {
         return custoMedio;
     }
 
-    public void setCustoMedio(BigDecimal custoMedio) {
+    public void setCustoMedio(double custoMedio) {
         this.custoMedio = custoMedio;
     }
 
-    public BigDecimal getVenda() {
+    public double getVenda() {
         return venda;
     }
 
-    public void setVenda(BigDecimal venda) {
+    public void setVenda(double venda) {
         this.venda = venda;
     }
 
-    public BigDecimal getTotal() {
+    public double getTotal() {
         return total;
     }
 
-    public void setTotal(BigDecimal total) {
+    public void setTotal(double total) {
         this.total = total;
     }
 

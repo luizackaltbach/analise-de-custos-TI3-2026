@@ -1,6 +1,5 @@
 package model;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
@@ -14,30 +13,30 @@ public class ResultadoAdministrativo {
     private String codigoProduto;
     private String nomeProduto;
     private String unidade;
-    private BigDecimal total;
-    private BigDecimal investimentoFixo;
+    private double total;
+    private double investimentoFixo;
     private String tipoInvestimento;
-    private BigDecimal investimentoVariavel;
-    private BigDecimal totalReposicao;
-    private BigDecimal totalCustoFixo;
-    private BigDecimal percentualFixo;
-    private BigDecimal taxaRetornoCapital;
-    private BigDecimal receitaLiquida;
+    private double investimentoVariavel;
+    private double totalReposicao;
+    private double totalCustoFixo;
+    private double percentualFixo;
+    private double taxaRetornoCapital;
+    private double receitaLiquida;
     private String tipoDespesa;
-    private BigDecimal despesaVenda;
-    private BigDecimal receitaBruta;
-    private BigDecimal precoFinalUnitario;
-    private BigDecimal precoVendaDesconto;
-    private BigDecimal descontoProgramado;
-    private BigDecimal aumento;
-    private BigDecimal pontoEquilibrioVariavel;
-    private BigDecimal pontoEquilibrioFixo;
-    private BigDecimal margemLucro;
+    private double despesaVenda;
+    private double receitaBruta;
+    private double precoFinalUnitario;
+    private double precoVendaDesconto;
+    private double descontoProgramado;
+    private double aumento;
+    private double pontoEquilibrioVariavel;
+    private double pontoEquilibrioFixo;
+    private double margemLucro;
 
     public ResultadoAdministrativo() {
     }
 
-    public ResultadoAdministrativo(LocalDateTime dataCalculo, int idProdutoVenda, String codigoProduto, String nomeProduto, String unidade, BigDecimal total, BigDecimal investimentoFixo, String tipoInvestimento, BigDecimal investimentoVariavel, BigDecimal totalReposicao, BigDecimal totalCustoFixo, BigDecimal percentualFixo, BigDecimal taxaRetornoCapital, BigDecimal receitaLiquida, String tipoDespesa, BigDecimal despesaVenda, BigDecimal receitaBruta, BigDecimal precoFinalUnitario, BigDecimal precoVendaDesconto, BigDecimal descontoProgramado, BigDecimal aumento, BigDecimal pontoEquilibrioVariavel, BigDecimal pontoEquilibrioFixo, BigDecimal margemLucro) {
+    public ResultadoAdministrativo(LocalDateTime dataCalculo, int idProdutoVenda, String codigoProduto, String nomeProduto, String unidade, double total, double investimentoFixo, String tipoInvestimento, double investimentoVariavel, double totalReposicao, double totalCustoFixo, double percentualFixo, double taxaRetornoCapital, double receitaLiquida, String tipoDespesa, double despesaVenda, double receitaBruta, double precoFinalUnitario, double precoVendaDesconto, double descontoProgramado, double aumento, double pontoEquilibrioVariavel, double pontoEquilibrioFixo, double margemLucro) {
         this.dataCalculo = dataCalculo;
         this.idProdutoVenda = idProdutoVenda;
         this.codigoProduto = codigoProduto;
@@ -112,19 +111,19 @@ public class ResultadoAdministrativo {
         this.unidade = unidade;
     }
 
-    public BigDecimal getTotal() {
+    public double getTotal() {
         return total;
     }
 
-    public void setTotal(BigDecimal total) {
+    public void setTotal(double total) {
         this.total = total;
     }
 
-    public BigDecimal getInvestimentoFixo() {
+    public double getInvestimentoFixo() {
         return investimentoFixo;
     }
 
-    public void setInvestimentoFixo(BigDecimal investimentoFixo) {
+    public void setInvestimentoFixo(double investimentoFixo) {
         this.investimentoFixo = investimentoFixo;
     }
 
@@ -136,51 +135,51 @@ public class ResultadoAdministrativo {
         this.tipoInvestimento = tipoInvestimento;
     }
 
-    public BigDecimal getInvestimentoVariavel() {
+    public double getInvestimentoVariavel() {
         return investimentoVariavel;
     }
 
-    public void setInvestimentoVariavel(BigDecimal investimentoVariavel) {
+    public void setInvestimentoVariavel(double investimentoVariavel) {
         this.investimentoVariavel = investimentoVariavel;
     }
 
-    public BigDecimal getTotalReposicao() {
+    public double getTotalReposicao() {
         return totalReposicao;
     }
 
-    public void setTotalReposicao(BigDecimal totalReposicao) {
+    public void setTotalReposicao(double totalReposicao) {
         this.totalReposicao = totalReposicao;
     }
 
-    public BigDecimal getTotalCustoFixo() {
+    public double getTotalCustoFixo() {
         return totalCustoFixo;
     }
 
-    public void setTotalCustoFixo(BigDecimal totalCustoFixo) {
+    public void setTotalCustoFixo(double totalCustoFixo) {
         this.totalCustoFixo = totalCustoFixo;
     }
 
-    public BigDecimal getPercentualFixo() {
+    public double getPercentualFixo() {
         return percentualFixo;
     }
 
-    public void setPercentualFixo(BigDecimal percentualFixo) {
+    public void setPercentualFixo(double percentualFixo) {
         this.percentualFixo = percentualFixo;
     }
 
-    public BigDecimal getTaxaRetornoCapital() {
+    public double getTaxaRetornoCapital() {
         return taxaRetornoCapital;
     }
 
-    public void setTaxaRetornoCapital(BigDecimal taxaRetornoCapital) {
+    public void setTaxaRetornoCapital(double taxaRetornoCapital) {
         this.taxaRetornoCapital = taxaRetornoCapital;
     }
 
-    public BigDecimal getReceitaLiquida() {
+    public double getReceitaLiquida() {
         return receitaLiquida;
     }
 
-    public void setReceitaLiquida(BigDecimal receitaLiquida) {
+    public void setReceitaLiquida(double receitaLiquida) {
         this.receitaLiquida = receitaLiquida;
     }
 
@@ -192,75 +191,75 @@ public class ResultadoAdministrativo {
         this.tipoDespesa = tipoDespesa;
     }
 
-    public BigDecimal getDespesaVenda() {
+    public double getDespesaVenda() {
         return despesaVenda;
     }
 
-    public void setDespesaVenda(BigDecimal despesaVenda) {
+    public void setDespesaVenda(double despesaVenda) {
         this.despesaVenda = despesaVenda;
     }
 
-    public BigDecimal getReceitaBruta() {
+    public double getReceitaBruta() {
         return receitaBruta;
     }
 
-    public void setReceitaBruta(BigDecimal receitaBruta) {
+    public void setReceitaBruta(double receitaBruta) {
         this.receitaBruta = receitaBruta;
     }
 
-    public BigDecimal getPrecoFinalUnitario() {
+    public double getPrecoFinalUnitario() {
         return precoFinalUnitario;
     }
 
-    public void setPrecoFinalUnitario(BigDecimal precoFinalUnitario) {
+    public void setPrecoFinalUnitario(double precoFinalUnitario) {
         this.precoFinalUnitario = precoFinalUnitario;
     }
 
-    public BigDecimal getPrecoVendaDesconto() {
+    public double getPrecoVendaDesconto() {
         return precoVendaDesconto;
     }
 
-    public void setPrecoVendaDesconto(BigDecimal precoVendaDesconto) {
+    public void setPrecoVendaDesconto(double precoVendaDesconto) {
         this.precoVendaDesconto = precoVendaDesconto;
     }
 
-    public BigDecimal getDescontoProgramado() {
+    public double getDescontoProgramado() {
         return descontoProgramado;
     }
 
-    public void setDescontoProgramado(BigDecimal descontoProgramado) {
+    public void setDescontoProgramado(double descontoProgramado) {
         this.descontoProgramado = descontoProgramado;
     }
 
-    public BigDecimal getAumento() {
+    public double getAumento() {
         return aumento;
     }
 
-    public void setAumento(BigDecimal aumento) {
+    public void setAumento(double aumento) {
         this.aumento = aumento;
     }
 
-    public BigDecimal getPontoEquilibrioVariavel() {
+    public double getPontoEquilibrioVariavel() {
         return pontoEquilibrioVariavel;
     }
 
-    public void setPontoEquilibrioVariavel(BigDecimal pontoEquilibrioVariavel) {
+    public void setPontoEquilibrioVariavel(double pontoEquilibrioVariavel) {
         this.pontoEquilibrioVariavel = pontoEquilibrioVariavel;
     }
 
-    public BigDecimal getPontoEquilibrioFixo() {
+    public double getPontoEquilibrioFixo() {
         return pontoEquilibrioFixo;
     }
 
-    public void setPontoEquilibrioFixo(BigDecimal pontoEquilibrioFixo) {
+    public void setPontoEquilibrioFixo(double pontoEquilibrioFixo) {
         this.pontoEquilibrioFixo = pontoEquilibrioFixo;
     }
 
-    public BigDecimal getMargemLucro() {
+    public double getMargemLucro() {
         return margemLucro;
     }
 
-    public void setMargemLucro(BigDecimal margemLucro) {
+    public void setMargemLucro(double margemLucro) {
         this.margemLucro = margemLucro;
     }
 

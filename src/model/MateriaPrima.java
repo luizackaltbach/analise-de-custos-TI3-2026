@@ -1,6 +1,5 @@
 package model;
 
-import java.math.BigDecimal;
 
 /**
  * Entidade da tabela materia_prima.
@@ -11,13 +10,13 @@ public class MateriaPrima {
     private String codigo;
     private String nome;
     private String unidade;
-    private BigDecimal quantidadeEstoque;
-    private BigDecimal custoReposicao;
+    private double quantidadeEstoque;
+    private double custoReposicao;
 
     public MateriaPrima() {
     }
 
-    public MateriaPrima(String codigo, String nome, String unidade, BigDecimal quantidadeEstoque, BigDecimal custoReposicao) {
+    public MateriaPrima(String codigo, String nome, String unidade, double quantidadeEstoque, double custoReposicao) {
         this.codigo = codigo;
         this.nome = nome;
         this.unidade = unidade;
@@ -57,19 +56,19 @@ public class MateriaPrima {
         this.unidade = unidade;
     }
 
-    public BigDecimal getQuantidadeEstoque() {
+    public double getQuantidadeEstoque() {
         return quantidadeEstoque;
     }
 
-    public void setQuantidadeEstoque(BigDecimal quantidadeEstoque) {
+    public void setQuantidadeEstoque(double quantidadeEstoque) {
         this.quantidadeEstoque = quantidadeEstoque;
     }
 
-    public BigDecimal getCustoReposicao() {
+    public double getCustoReposicao() {
         return custoReposicao;
     }
 
-    public void setCustoReposicao(BigDecimal custoReposicao) {
+    public void setCustoReposicao(double custoReposicao) {
         this.custoReposicao = custoReposicao;
     }
 

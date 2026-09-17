@@ -24,7 +24,7 @@ public class InvestimentoFixoDAO {
         Connection con = dataSource.getConnection();
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, obj.getTipo());
-            ps.setBigDecimal(2, obj.getValor());
+            ps.setDouble(2, obj.getValor());
             ps.executeUpdate();
         }
     }
@@ -34,7 +34,7 @@ public class InvestimentoFixoDAO {
         Connection con = dataSource.getConnection();
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, obj.getTipo());
-            ps.setBigDecimal(2, obj.getValor());
+            ps.setDouble(2, obj.getValor());
             ps.setInt(3, obj.getId());
             ps.executeUpdate();
         }
@@ -77,7 +77,7 @@ public class InvestimentoFixoDAO {
         InvestimentoFixo obj = new InvestimentoFixo();
         obj.setId(rs.getInt("id"));
         obj.setTipo(rs.getString("tipo"));
-        obj.setValor(rs.getBigDecimal("valor"));
+        obj.setValor(rs.getDouble("valor"));
         return obj;
     }
 }

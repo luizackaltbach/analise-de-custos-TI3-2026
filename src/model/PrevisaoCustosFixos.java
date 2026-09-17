@@ -1,6 +1,5 @@
 package model;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /**
@@ -13,12 +12,12 @@ public class PrevisaoCustosFixos {
     private int sequencia;
     private int idGastoGeral;
     private int idCentroCusto;
-    private BigDecimal valor;
+    private double valor;
 
     public PrevisaoCustosFixos() {
     }
 
-    public PrevisaoCustosFixos(LocalDate competencia, int sequencia, int idGastoGeral, int idCentroCusto, BigDecimal valor) {
+    public PrevisaoCustosFixos(LocalDate competencia, int sequencia, int idGastoGeral, int idCentroCusto, double valor) {
         this.competencia = competencia;
         this.sequencia = sequencia;
         this.idGastoGeral = idGastoGeral;
@@ -66,11 +65,11 @@ public class PrevisaoCustosFixos {
         this.idCentroCusto = idCentroCusto;
     }
 
-    public BigDecimal getValor() {
+    public double getValor() {
         return valor;
     }
 
-    public void setValor(BigDecimal valor) {
+    public void setValor(double valor) {
         this.valor = valor;
     }
 

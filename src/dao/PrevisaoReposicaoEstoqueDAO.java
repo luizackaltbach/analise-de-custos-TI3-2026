@@ -25,9 +25,9 @@ public class PrevisaoReposicaoEstoqueDAO {
             ps.setObject(1, obj.getCompetencia());
             ps.setInt(2, obj.getSequencia());
             ps.setInt(3, obj.getIdMateriaPrima());
-            ps.setBigDecimal(4, obj.getQuantidade());
-            ps.setBigDecimal(5, obj.getCustoReposicao());
-            ps.setBigDecimal(6, obj.getOutrosGastos());
+            ps.setDouble(4, obj.getQuantidade());
+            ps.setDouble(5, obj.getCustoReposicao());
+            ps.setDouble(6, obj.getOutrosGastos());
             ps.executeUpdate();
         }
     }
@@ -39,9 +39,9 @@ public class PrevisaoReposicaoEstoqueDAO {
             ps.setObject(1, obj.getCompetencia());
             ps.setInt(2, obj.getSequencia());
             ps.setInt(3, obj.getIdMateriaPrima());
-            ps.setBigDecimal(4, obj.getQuantidade());
-            ps.setBigDecimal(5, obj.getCustoReposicao());
-            ps.setBigDecimal(6, obj.getOutrosGastos());
+            ps.setDouble(4, obj.getQuantidade());
+            ps.setDouble(5, obj.getCustoReposicao());
+            ps.setDouble(6, obj.getOutrosGastos());
             ps.setInt(7, obj.getId());
             ps.executeUpdate();
         }
@@ -86,10 +86,10 @@ public class PrevisaoReposicaoEstoqueDAO {
         obj.setCompetencia(rs.getObject("competencia", java.time.LocalDate.class));
         obj.setSequencia(rs.getInt("sequencia"));
         obj.setIdMateriaPrima(rs.getInt("id_materia_prima"));
-        obj.setQuantidade(rs.getBigDecimal("quantidade"));
-        obj.setCustoReposicao(rs.getBigDecimal("custo_reposicao"));
-        obj.setOutrosGastos(rs.getBigDecimal("outros_gastos"));
-        obj.setGastosTotais(rs.getBigDecimal("gastos_totais"));
+        obj.setQuantidade(rs.getDouble("quantidade"));
+        obj.setCustoReposicao(rs.getDouble("custo_reposicao"));
+        obj.setOutrosGastos(rs.getDouble("outros_gastos"));
+        obj.setGastosTotais(rs.getDouble("gastos_totais"));
         return obj;
     }
 }

@@ -25,8 +25,8 @@ public class ComposicaoMateriaPrimaDAO {
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, obj.getIdProdutoVenda());
             ps.setInt(2, obj.getIdMateriaPrima());
-            ps.setBigDecimal(3, obj.getQuantidade());
-            ps.setBigDecimal(4, obj.getCustoReposicao());
+            ps.setDouble(3, obj.getQuantidade());
+            ps.setDouble(4, obj.getCustoReposicao());
             ps.executeUpdate();
         }
     }
@@ -37,8 +37,8 @@ public class ComposicaoMateriaPrimaDAO {
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, obj.getIdProdutoVenda());
             ps.setInt(2, obj.getIdMateriaPrima());
-            ps.setBigDecimal(3, obj.getQuantidade());
-            ps.setBigDecimal(4, obj.getCustoReposicao());
+            ps.setDouble(3, obj.getQuantidade());
+            ps.setDouble(4, obj.getCustoReposicao());
             ps.setInt(5, obj.getId());
             ps.executeUpdate();
         }
@@ -82,9 +82,9 @@ public class ComposicaoMateriaPrimaDAO {
         obj.setId(rs.getInt("id"));
         obj.setIdProdutoVenda(rs.getInt("id_produto_venda"));
         obj.setIdMateriaPrima(rs.getInt("id_materia_prima"));
-        obj.setQuantidade(rs.getBigDecimal("quantidade"));
-        obj.setCustoReposicao(rs.getBigDecimal("custo_reposicao"));
-        obj.setTotal(rs.getBigDecimal("total"));
+        obj.setQuantidade(rs.getDouble("quantidade"));
+        obj.setCustoReposicao(rs.getDouble("custo_reposicao"));
+        obj.setTotal(rs.getDouble("total"));
         return obj;
     }
 }

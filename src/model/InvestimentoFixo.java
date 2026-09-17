@@ -1,6 +1,5 @@
 package model;
 
-import java.math.BigDecimal;
 
 /**
  * Entidade da tabela investimento_fixo.
@@ -9,12 +8,12 @@ public class InvestimentoFixo {
 
     private int id;
     private String tipo;
-    private BigDecimal valor;
+    private double valor;
 
     public InvestimentoFixo() {
     }
 
-    public InvestimentoFixo(String tipo, BigDecimal valor) {
+    public InvestimentoFixo(String tipo, double valor) {
         this.tipo = tipo;
         this.valor = valor;
     }
@@ -35,11 +34,11 @@ public class InvestimentoFixo {
         this.tipo = tipo;
     }
 
-    public BigDecimal getValor() {
+    public double getValor() {
         return valor;
     }
 
-    public void setValor(BigDecimal valor) {
+    public void setValor(double valor) {
         this.valor = valor;
     }
 

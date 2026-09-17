@@ -1,6 +1,5 @@
 package model;
 
-import java.math.BigDecimal;
 
 /**
  * Entidade da tabela composicao_centro_custo.
@@ -10,14 +9,14 @@ public class ComposicaoCentroCusto {
     private int id;
     private int idProdutoVenda;
     private int idCentroCusto;
-    private BigDecimal tempoMinutos;
-    private BigDecimal custoMinuto;
-    private BigDecimal total;  // calculada pelo banco
+    private double tempoMinutos;
+    private double custoMinuto;
+    private double total;  // calculada pelo banco
 
     public ComposicaoCentroCusto() {
     }
 
-    public ComposicaoCentroCusto(int idProdutoVenda, int idCentroCusto, BigDecimal tempoMinutos, BigDecimal custoMinuto) {
+    public ComposicaoCentroCusto(int idProdutoVenda, int idCentroCusto, double tempoMinutos, double custoMinuto) {
         this.idProdutoVenda = idProdutoVenda;
         this.idCentroCusto = idCentroCusto;
         this.tempoMinutos = tempoMinutos;
@@ -48,27 +47,27 @@ public class ComposicaoCentroCusto {
         this.idCentroCusto = idCentroCusto;
     }
 
-    public BigDecimal getTempoMinutos() {
+    public double getTempoMinutos() {
         return tempoMinutos;
     }
 
-    public void setTempoMinutos(BigDecimal tempoMinutos) {
+    public void setTempoMinutos(double tempoMinutos) {
         this.tempoMinutos = tempoMinutos;
     }
 
-    public BigDecimal getCustoMinuto() {
+    public double getCustoMinuto() {
         return custoMinuto;
     }
 
-    public void setCustoMinuto(BigDecimal custoMinuto) {
+    public void setCustoMinuto(double custoMinuto) {
         this.custoMinuto = custoMinuto;
     }
 
-    public BigDecimal getTotal() {
+    public double getTotal() {
         return total;
     }
 
-    public void setTotal(BigDecimal total) {
+    public void setTotal(double total) {
         this.total = total;
     }
 

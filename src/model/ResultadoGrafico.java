@@ -1,6 +1,5 @@
 package model;
 
-import java.math.BigDecimal;
 
 /**
  * Entidade da tabela resultado_grafico.
@@ -9,15 +8,15 @@ public class ResultadoGrafico {
 
     private int id;
     private int idResultado;
-    private BigDecimal quantidadeVenda;
-    private BigDecimal receitaTotal;
-    private BigDecimal custoTotal;
-    private BigDecimal lucroPrejuizo;  // calculada pelo banco
+    private double quantidadeVenda;
+    private double receitaTotal;
+    private double custoTotal;
+    private double lucroPrejuizo;  // calculada pelo banco
 
     public ResultadoGrafico() {
     }
 
-    public ResultadoGrafico(int idResultado, BigDecimal quantidadeVenda, BigDecimal receitaTotal, BigDecimal custoTotal) {
+    public ResultadoGrafico(int idResultado, double quantidadeVenda, double receitaTotal, double custoTotal) {
         this.idResultado = idResultado;
         this.quantidadeVenda = quantidadeVenda;
         this.receitaTotal = receitaTotal;
@@ -40,35 +39,35 @@ public class ResultadoGrafico {
         this.idResultado = idResultado;
     }
 
-    public BigDecimal getQuantidadeVenda() {
+    public double getQuantidadeVenda() {
         return quantidadeVenda;
     }
 
-    public void setQuantidadeVenda(BigDecimal quantidadeVenda) {
+    public void setQuantidadeVenda(double quantidadeVenda) {
         this.quantidadeVenda = quantidadeVenda;
     }
 
-    public BigDecimal getReceitaTotal() {
+    public double getReceitaTotal() {
         return receitaTotal;
     }
 
-    public void setReceitaTotal(BigDecimal receitaTotal) {
+    public void setReceitaTotal(double receitaTotal) {
         this.receitaTotal = receitaTotal;
     }
 
-    public BigDecimal getCustoTotal() {
+    public double getCustoTotal() {
         return custoTotal;
     }
 
-    public void setCustoTotal(BigDecimal custoTotal) {
+    public void setCustoTotal(double custoTotal) {
         this.custoTotal = custoTotal;
     }
 
-    public BigDecimal getLucroPrejuizo() {
+    public double getLucroPrejuizo() {
         return lucroPrejuizo;
     }
 
-    public void setLucroPrejuizo(BigDecimal lucroPrejuizo) {
+    public void setLucroPrejuizo(double lucroPrejuizo) {
         this.lucroPrejuizo = lucroPrejuizo;
     }
 

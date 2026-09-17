@@ -27,7 +27,7 @@ public class PrevisaoCustosFixosDAO {
             ps.setInt(2, obj.getSequencia());
             ps.setInt(3, obj.getIdGastoGeral());
             ps.setInt(4, obj.getIdCentroCusto());
-            ps.setBigDecimal(5, obj.getValor());
+            ps.setDouble(5, obj.getValor());
             ps.executeUpdate();
         }
     }
@@ -40,7 +40,7 @@ public class PrevisaoCustosFixosDAO {
             ps.setInt(2, obj.getSequencia());
             ps.setInt(3, obj.getIdGastoGeral());
             ps.setInt(4, obj.getIdCentroCusto());
-            ps.setBigDecimal(5, obj.getValor());
+            ps.setDouble(5, obj.getValor());
             ps.setInt(6, obj.getId());
             ps.executeUpdate();
         }
@@ -86,7 +86,7 @@ public class PrevisaoCustosFixosDAO {
         obj.setSequencia(rs.getInt("sequencia"));
         obj.setIdGastoGeral(rs.getInt("id_gasto_geral"));
         obj.setIdCentroCusto(rs.getInt("id_centro_custo"));
-        obj.setValor(rs.getBigDecimal("valor"));
+        obj.setValor(rs.getDouble("valor"));
         return obj;
     }
 }
