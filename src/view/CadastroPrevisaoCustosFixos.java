@@ -230,17 +230,17 @@ public class CadastroPrevisaoCustosFixos extends javax.swing.JInternalFrame {
 
         tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Centro de Custo", "Conta de Gastos", "Valor", "Mes", "Ano"
+                "Centro de Custo", "Conta de Gastos", "Valor", "Valor por hora", "Valor por minuto", "Mes", "Ano"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -468,8 +468,10 @@ public class CadastroPrevisaoCustosFixos extends javax.swing.JInternalFrame {
                 centro.getNome(),
                 conta.getNomeConta(),
                 p.getValor(),
+                p.getCustoHora(),
+                p.getCustoMinuto(),
                 p.getCompetencia().getMonthValue(),
-                p.getCompetencia().getYear(),
+                p.getCompetencia().getYear()
             });
         }
     }

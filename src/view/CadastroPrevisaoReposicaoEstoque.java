@@ -156,7 +156,7 @@ public class CadastroPrevisaoReposicaoEstoque extends JInternalFrame {
             model.addRow(new Object[]{
                 p.getCompetencia().format(FORMATO_DATA),
                 p.getSequencia(),
-                m.getId(),
+                m.getCodigo(),
                 m.getNome(),
                 p.getQuantidade(),
                 p.getCustoReposicao(),
@@ -172,7 +172,6 @@ public class CadastroPrevisaoReposicaoEstoque extends JInternalFrame {
         quantidadeTexto.setText("");
         custoReposicao.setText("");
         outrosGastosTexto.setText("");
-        gastosTotaisTexto.setText("");
         matprimaBox.setSelectedIndex(0);
 
         reposicaoTable.clearSelection();
@@ -208,14 +207,12 @@ public class CadastroPrevisaoReposicaoEstoque extends JInternalFrame {
         reposicaoTable = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
         incluirBotao = new javax.swing.JButton();
         atualizarBotao = new javax.swing.JButton();
         excluirBotao = new javax.swing.JButton();
         quantidadeTexto = new javax.swing.JTextField();
         custoReposicao = new javax.swing.JTextField();
         outrosGastosTexto = new javax.swing.JTextField();
-        gastosTotaisTexto = new javax.swing.JTextField();
         sequenciaTexto = new javax.swing.JTextField();
 
         jButton19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/mais.png"))); // NOI18N
@@ -292,8 +289,6 @@ public class CadastroPrevisaoReposicaoEstoque extends JInternalFrame {
 
         jLabel8.setText("Outros Gastos(R$)");
 
-        jLabel9.setText("Gastos Totais (R$)");
-
         incluirBotao.setText("Incluir");
         incluirBotao.addActionListener(this::incluirBotaoActionPerformed);
 
@@ -302,8 +297,6 @@ public class CadastroPrevisaoReposicaoEstoque extends JInternalFrame {
 
         excluirBotao.setText("Excluir");
         excluirBotao.addActionListener(this::excluirBotaoActionPerformed);
-
-        gastosTotaisTexto.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -314,41 +307,37 @@ public class CadastroPrevisaoReposicaoEstoque extends JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(matprimaBox, javax.swing.GroupLayout.PREFERRED_SIZE, 637, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(matprimaBox, javax.swing.GroupLayout.PREFERRED_SIZE, 637, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(competenciaData, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel2)
+                                        .addComponent(sequenciaTexto)))
+                                .addComponent(jLabel3)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(incluirBotao)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(atualizarBotao)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(excluirBotao)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(competenciaData, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jLabel4)
+                                    .addComponent(quantidadeTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(43, 43, 43)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(sequenciaTexto)))
-                            .addComponent(jLabel3)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(incluirBotao)
-                                .addGap(18, 18, 18)
-                                .addComponent(atualizarBotao)
-                                .addGap(18, 18, 18)
-                                .addComponent(excluirBotao)))
-                        .addContainerGap(114, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(quantidadeTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(43, 43, 43)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(custoReposicao, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
-                            .addComponent(outrosGastosTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9)
-                            .addComponent(gastosTotaisTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(27, 27, 27))))
+                                    .addComponent(jLabel5)
+                                    .addComponent(custoReposicao, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(49, 49, 49)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(outrosGastosTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel8))))
+                        .addContainerGap(114, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -369,14 +358,12 @@ public class CadastroPrevisaoReposicaoEstoque extends JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jLabel5)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel9))
+                    .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(quantidadeTexto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(custoReposicao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(outrosGastosTexto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(gastosTotaisTexto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(outrosGastosTexto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -405,7 +392,6 @@ public class CadastroPrevisaoReposicaoEstoque extends JInternalFrame {
     private javax.swing.JFormattedTextField competenciaData;
     private javax.swing.JTextField custoReposicao;
     private javax.swing.JButton excluirBotao;
-    private javax.swing.JTextField gastosTotaisTexto;
     private javax.swing.JButton incluirBotao;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
@@ -426,7 +412,6 @@ public class CadastroPrevisaoReposicaoEstoque extends JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JComboBox<String> matprimaBox;
     private javax.swing.JTextField outrosGastosTexto;
