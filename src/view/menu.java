@@ -19,22 +19,22 @@ public class menu extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
-        jMenuItem11 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
+        jMenuItem8 = new javax.swing.JMenuItem();
+        jMenuItem11 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem13 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem15 = new javax.swing.JMenuItem();
-        jMenuItem16 = new javax.swing.JMenuItem();
         jMenuItem18 = new javax.swing.JMenuItem();
-        jMenuItem19 = new javax.swing.JMenuItem();
         jMenuItem20 = new javax.swing.JMenuItem();
+        jMenuItem19 = new javax.swing.JMenuItem();
+        jMenuItem16 = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem21 = new javax.swing.JMenuItem();
@@ -65,41 +65,41 @@ public class menu extends javax.swing.JFrame {
 
         jMenu2.setText("Cadastro");
 
-        jMenuItem3.setText("Composição de produtos");
-        jMenuItem3.addActionListener(this::jMenuItem3ActionPerformed);
-        jMenu2.add(jMenuItem3);
-
         jMenuItem4.setText("Produtos primários");
         jMenuItem4.addActionListener(this::jMenuItem4ActionPerformed);
         jMenu2.add(jMenuItem4);
-
-        jMenuItem5.setText("Investimento fixo");
-        jMenuItem5.addActionListener(this::jMenuItem5ActionPerformed);
-        jMenu2.add(jMenuItem5);
-
-        jMenuItem6.setText("Contas de gastos gerais");
-        jMenuItem6.addActionListener(this::jMenuItem6ActionPerformed);
-        jMenu2.add(jMenuItem6);
 
         jMenuItem7.setText("Centro de custos");
         jMenuItem7.addActionListener(this::jMenuItem7ActionPerformed);
         jMenu2.add(jMenuItem7);
 
-        jMenuItem8.setText("Previsão de reposição em estoque");
-        jMenuItem8.addActionListener(this::jMenuItem8ActionPerformed);
-        jMenu2.add(jMenuItem8);
+        jMenuItem6.setText("Contas de gastos gerais");
+        jMenuItem6.addActionListener(this::jMenuItem6ActionPerformed);
+        jMenu2.add(jMenuItem6);
+
+        jMenuItem5.setText("Investimento fixo");
+        jMenuItem5.addActionListener(this::jMenuItem5ActionPerformed);
+        jMenu2.add(jMenuItem5);
 
         jMenuItem10.setText("Despesas com vendas");
         jMenuItem10.addActionListener(this::jMenuItem10ActionPerformed);
         jMenu2.add(jMenuItem10);
 
+        jMenuItem12.setText("Capital de giro");
+        jMenuItem12.addActionListener(this::jMenuItem12ActionPerformed);
+        jMenu2.add(jMenuItem12);
+
+        jMenuItem8.setText("Previsão de reposição em estoque");
+        jMenuItem8.addActionListener(this::jMenuItem8ActionPerformed);
+        jMenu2.add(jMenuItem8);
+
         jMenuItem11.setText("Previsão de custos fixos");
         jMenuItem11.addActionListener(this::jMenuItem11ActionPerformed);
         jMenu2.add(jMenuItem11);
 
-        jMenuItem12.setText("Capital de giro");
-        jMenuItem12.addActionListener(this::jMenuItem12ActionPerformed);
-        jMenu2.add(jMenuItem12);
+        jMenuItem3.setText("Composição de produtos");
+        jMenuItem3.addActionListener(this::jMenuItem3ActionPerformed);
+        jMenu2.add(jMenuItem3);
 
         jMenuItem13.setText("Resultado");
         jMenuItem13.addActionListener(this::jMenuItem13ActionPerformed);
@@ -113,21 +113,21 @@ public class menu extends javax.swing.JFrame {
         jMenuItem15.addActionListener(this::jMenuItem15ActionPerformed);
         jMenu3.add(jMenuItem15);
 
-        jMenuItem16.setText("Listagem de produtos acabados");
-        jMenuItem16.addActionListener(this::jMenuItem16ActionPerformed);
-        jMenu3.add(jMenuItem16);
-
         jMenuItem18.setText("Contas de gastos gerais");
         jMenuItem18.addActionListener(this::jMenuItem18ActionPerformed);
         jMenu3.add(jMenuItem18);
+
+        jMenuItem20.setText("Previsão de reposição em estoque");
+        jMenuItem20.addActionListener(this::jMenuItem20ActionPerformed);
+        jMenu3.add(jMenuItem20);
 
         jMenuItem19.setText("Previsão de custos fixos");
         jMenuItem19.addActionListener(this::jMenuItem19ActionPerformed);
         jMenu3.add(jMenuItem19);
 
-        jMenuItem20.setText("Previsão de reposição em estoque");
-        jMenuItem20.addActionListener(this::jMenuItem20ActionPerformed);
-        jMenu3.add(jMenuItem20);
+        jMenuItem16.setText("Listagem de produtos acabados");
+        jMenuItem16.addActionListener(this::jMenuItem16ActionPerformed);
+        jMenu3.add(jMenuItem16);
 
         jMenuItem1.setText("Listagem de preços");
         jMenuItem1.addActionListener(this::jMenuItem1ActionPerformed);
