@@ -17,26 +17,28 @@ public class ComposicaoMateriaPrimaDAO {
     }
 
     public void inserir(ComposicaoMateriaPrima obj) throws SQLException {
-        String sql = "INSERT INTO composicao_materia_prima (id_produto_venda, id_materia_prima, quantidade, custo_reposicao) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO composicao_materia_prima (id_produto_venda, id_materia_prima, quantidade, custo_reposicao, total) VALUES (?, ?, ?, ?, ?)";
         Connection con = dataSource.getConnection();
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, obj.getIdProdutoVenda());
             ps.setInt(2, obj.getIdMateriaPrima());
             ps.setDouble(3, obj.getQuantidade());
             ps.setDouble(4, obj.getCustoReposicao());
+            ps.setDouble(5, obj.getTotal());
             ps.executeUpdate();
         }
     }
 
     public void alterar(ComposicaoMateriaPrima obj) throws SQLException {
-        String sql = "UPDATE composicao_materia_prima SET id_produto_venda = ?, id_materia_prima = ?, quantidade = ?, custo_reposicao = ? WHERE id = ?";
+        String sql = "UPDATE composicao_materia_prima SET id_produto_venda = ?, id_materia_prima = ?, quantidade = ?, custo_reposicao = ?, total = ? WHERE id = ?";
         Connection con = dataSource.getConnection();
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, obj.getIdProdutoVenda());
             ps.setInt(2, obj.getIdMateriaPrima());
             ps.setDouble(3, obj.getQuantidade());
             ps.setDouble(4, obj.getCustoReposicao());
-            ps.setInt(5, obj.getId());
+            ps.setDouble(5, obj.getTotal());
+            ps.setInt(6, obj.getId());
             ps.executeUpdate();
         }
     }

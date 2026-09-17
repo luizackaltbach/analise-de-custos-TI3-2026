@@ -17,26 +17,28 @@ public class ComposicaoCentroCustoDAO {
     }
 
     public void inserir(ComposicaoCentroCusto obj) throws SQLException {
-        String sql = "INSERT INTO composicao_centro_custo (id_produto_venda, id_centro_custo, tempo_minutos, custo_minuto) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO composicao_centro_custo (id_produto_venda, id_centro_custo, tempo_minutos, custo_minuto, total) VALUES (?, ?, ?, ?, ?)";
         Connection con = dataSource.getConnection();
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, obj.getIdProdutoVenda());
             ps.setInt(2, obj.getIdCentroCusto());
             ps.setDouble(3, obj.getTempoMinutos());
             ps.setDouble(4, obj.getCustoMinuto());
+            ps.setDouble(5, obj.getTotal());
             ps.executeUpdate();
         }
     }
 
     public void alterar(ComposicaoCentroCusto obj) throws SQLException {
-        String sql = "UPDATE composicao_centro_custo SET id_produto_venda = ?, id_centro_custo = ?, tempo_minutos = ?, custo_minuto = ? WHERE id = ?";
+        String sql = "UPDATE composicao_centro_custo SET id_produto_venda = ?, id_centro_custo = ?, tempo_minutos = ?, custo_minuto = ?, total = ? WHERE id = ?";
         Connection con = dataSource.getConnection();
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, obj.getIdProdutoVenda());
             ps.setInt(2, obj.getIdCentroCusto());
             ps.setDouble(3, obj.getTempoMinutos());
             ps.setDouble(4, obj.getCustoMinuto());
-            ps.setInt(5, obj.getId());
+            ps.setDouble(5, obj.getTotal());
+            ps.setInt(6, obj.getId());
             ps.executeUpdate();
         }
     }

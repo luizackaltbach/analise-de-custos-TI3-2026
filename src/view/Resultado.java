@@ -397,13 +397,12 @@ public class Resultado extends javax.swing.JInternalFrame {
         // retorno_exigido = capital_investido × (taxa_retorno_capital / 100)
         double retornoExigido = capitalInvestido * (taxaRetornoCapital / 100);
 
-        // retorno_por_unidade = retorno_exigido / quantidade
-        double retornoPorUnidade = retornoExigido / quantidade;
-
         // 4.3 - Receita necessária (markup divisor)
 
-        // receita_liquida = total + retorno_por_unidade
-        double receitaLiquida = total + retornoPorUnidade;
+        // receita_liquida = total + retorno_exigido
+        // os dois são do lote: o custo vem das composições e o retorno é do
+        // capital inteiro. A divisão por unidade acontece só no preço final.
+        double receitaLiquida = total + retornoExigido;
 
         // p = percentual da despesa de venda / 100
         double p = despesa.getPercentual() / 100;
