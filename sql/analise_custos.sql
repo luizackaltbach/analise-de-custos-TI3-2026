@@ -12,34 +12,34 @@ CREATE TABLE materia_prima (
   unidade            VARCHAR(15),
   custo_reposicao    DECIMAL(13,4) DEFAULT 0,
   PRIMARY KEY (id)
-) ENGINE=InnoDB;
+);
 
 CREATE TABLE investimento_fixo (
   id    INT           AUTO_INCREMENT,
   tipo  VARCHAR(50),
   valor DECIMAL(13,2) DEFAULT 0,
   PRIMARY KEY (id)
-) ENGINE=InnoDB;
+);
 
 CREATE TABLE gastos_gerais (
   id         INT         AUTO_INCREMENT,
   nome_conta VARCHAR(50),
   PRIMARY KEY (id)
-) ENGINE=InnoDB;
+);
 
 CREATE TABLE centro_custo (
   id             INT         AUTO_INCREMENT,
   nome           VARCHAR(50),
   horas_efetivas INT         DEFAULT 0,
   PRIMARY KEY (id)
-) ENGINE=InnoDB;
+);
 
 CREATE TABLE despesas_com_vendas (
   id         INT           AUTO_INCREMENT,
   nome_conta VARCHAR(50),
   percentual DECIMAL(9,4)  DEFAULT 0,
   PRIMARY KEY (id)
-) ENGINE=InnoDB;
+);
 
 CREATE TABLE capital_de_giro (
   id                    INT           AUTO_INCREMENT,
@@ -48,7 +48,7 @@ CREATE TABLE capital_de_giro (
   investimento_variavel DECIMAL(13,2) DEFAULT 0,
   periodo               DECIMAL(9,2)  DEFAULT 0,
   PRIMARY KEY (id)
-) ENGINE=InnoDB;
+);
 
 CREATE TABLE previsao_reposicao_estoque (
   id               INT           AUTO_INCREMENT,
@@ -59,9 +59,8 @@ CREATE TABLE previsao_reposicao_estoque (
   custo_reposicao  DECIMAL(13,4) DEFAULT 0,
   outros_gastos    DECIMAL(13,2) DEFAULT 0,
   gastos_totais    DECIMAL(13,2),
-  PRIMARY KEY (id),
-  KEY idx_pre_competencia (competencia)
-) ENGINE=InnoDB;
+  PRIMARY KEY (id)
+);
 
 CREATE TABLE previsao_custos_fixos (
   id              INT           AUTO_INCREMENT,
@@ -72,9 +71,8 @@ CREATE TABLE previsao_custos_fixos (
   valor           DECIMAL(13,2) DEFAULT 0,
   custo_hora      DECIMAL(13,4) DEFAULT 0,
   custo_minuto    DECIMAL(13,6) DEFAULT 0,
-  PRIMARY KEY (id),
-  KEY idx_pcf_competencia (competencia)
-) ENGINE=InnoDB;
+  PRIMARY KEY (id)
+);
 
 CREATE TABLE produtos_para_venda (
   id             INT           AUTO_INCREMENT,
@@ -85,7 +83,7 @@ CREATE TABLE produtos_para_venda (
   custo_geral    DECIMAL(13,2) DEFAULT 0,
   custo_unitario DECIMAL(13,4) DEFAULT 0,
   PRIMARY KEY (id)
-) ENGINE=InnoDB;
+);
 
 CREATE TABLE composicao_materia_prima (
   id               INT           AUTO_INCREMENT,
@@ -95,7 +93,7 @@ CREATE TABLE composicao_materia_prima (
   custo_reposicao  DECIMAL(13,4) DEFAULT 0,
   total DECIMAL(13,2),
   PRIMARY KEY (id)
-) ENGINE=InnoDB;
+);
 
 CREATE TABLE composicao_centro_custo (
   id               INT           AUTO_INCREMENT,
@@ -105,7 +103,7 @@ CREATE TABLE composicao_centro_custo (
   custo_minuto     DECIMAL(13,6) DEFAULT 0,
   total DECIMAL(13,2),
   PRIMARY KEY (id)
-) ENGINE=InnoDB;
+);
 
 CREATE TABLE resultado_administrativo (
   id               INT      AUTO_INCREMENT,
@@ -138,7 +136,6 @@ CREATE TABLE resultado_administrativo (
   ponto_equilibrio_fixo     DECIMAL(13,2) DEFAULT 0,
   margem_lucro              DECIMAL(9,4)  DEFAULT 0,
 
-  PRIMARY KEY (id),
-  KEY idx_resadm_produto_data (id_produto_venda, data_calculo)
-) ENGINE=InnoDB;
+  PRIMARY KEY (id)
+);
 
