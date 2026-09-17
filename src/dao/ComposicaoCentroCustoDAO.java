@@ -25,8 +25,8 @@ public class ComposicaoCentroCustoDAO {
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, obj.getIdProdutoVenda());
             ps.setInt(2, obj.getIdCentroCusto());
-            ps.setBigDecimal(3, obj.getTempoMinutos());
-            ps.setBigDecimal(4, obj.getCustoMinuto());
+            ps.setDouble(3, obj.getTempoMinutos());
+            ps.setDouble(4, obj.getCustoMinuto());
             ps.executeUpdate();
         }
     }
@@ -37,8 +37,8 @@ public class ComposicaoCentroCustoDAO {
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, obj.getIdProdutoVenda());
             ps.setInt(2, obj.getIdCentroCusto());
-            ps.setBigDecimal(3, obj.getTempoMinutos());
-            ps.setBigDecimal(4, obj.getCustoMinuto());
+            ps.setDouble(3, obj.getTempoMinutos());
+            ps.setDouble(4, obj.getCustoMinuto());
             ps.setInt(5, obj.getId());
             ps.executeUpdate();
         }
@@ -82,9 +82,9 @@ public class ComposicaoCentroCustoDAO {
         obj.setId(rs.getInt("id"));
         obj.setIdProdutoVenda(rs.getInt("id_produto_venda"));
         obj.setIdCentroCusto(rs.getInt("id_centro_custo"));
-        obj.setTempoMinutos(rs.getBigDecimal("tempo_minutos"));
-        obj.setCustoMinuto(rs.getBigDecimal("custo_minuto"));
-        obj.setTotal(rs.getBigDecimal("total"));
+        obj.setTempoMinutos(rs.getDouble("tempo_minutos"));
+        obj.setCustoMinuto(rs.getDouble("custo_minuto"));
+        obj.setTotal(rs.getDouble("total"));
         return obj;
     }
 }

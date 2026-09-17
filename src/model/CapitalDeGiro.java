@@ -1,6 +1,5 @@
 package model;
 
-import java.math.BigDecimal;
 
 /**
  * Entidade da tabela capital_de_giro.
@@ -9,14 +8,14 @@ public class CapitalDeGiro {
 
     private int id;
     private String situacao;
-    private BigDecimal prazoMedioDias;
-    private BigDecimal investimentoVariavel;
-    private BigDecimal periodo;
+    private double prazoMedioDias;
+    private double investimentoVariavel;
+    private double periodo;
 
     public CapitalDeGiro() {
     }
 
-    public CapitalDeGiro(String situacao, BigDecimal prazoMedioDias, BigDecimal investimentoVariavel, BigDecimal periodo) {
+    public CapitalDeGiro(String situacao, double prazoMedioDias, double investimentoVariavel, double periodo) {
         this.situacao = situacao;
         this.prazoMedioDias = prazoMedioDias;
         this.investimentoVariavel = investimentoVariavel;
@@ -39,27 +38,27 @@ public class CapitalDeGiro {
         this.situacao = situacao;
     }
 
-    public BigDecimal getPrazoMedioDias() {
+    public double getPrazoMedioDias() {
         return prazoMedioDias;
     }
 
-    public void setPrazoMedioDias(BigDecimal prazoMedioDias) {
+    public void setPrazoMedioDias(double prazoMedioDias) {
         this.prazoMedioDias = prazoMedioDias;
     }
 
-    public BigDecimal getInvestimentoVariavel() {
+    public double getInvestimentoVariavel() {
         return investimentoVariavel;
     }
 
-    public void setInvestimentoVariavel(BigDecimal investimentoVariavel) {
+    public void setInvestimentoVariavel(double investimentoVariavel) {
         this.investimentoVariavel = investimentoVariavel;
     }
 
-    public BigDecimal getPeriodo() {
+    public double getPeriodo() {
         return periodo;
     }
 
-    public void setPeriodo(BigDecimal periodo) {
+    public void setPeriodo(double periodo) {
         this.periodo = periodo;
     }
 

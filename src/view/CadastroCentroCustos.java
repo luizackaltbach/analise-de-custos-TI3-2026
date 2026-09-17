@@ -207,6 +207,7 @@ public class CadastroCentroCustos extends javax.swing.JInternalFrame {
         try {
         dao.inserir(centroCusto);
         JOptionPane.showMessageDialog(this, "Centro de custo cadastrado com sucesso!");
+        limparCampos();
         carregarTabela();
         } catch (SQLException e) {
         JOptionPane.showMessageDialog(this, "Erro ao cadastrar: " + e.getMessage());
@@ -241,6 +242,11 @@ public class CadastroCentroCustos extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_tabelaMouseClicked
     List<CentroCusto> centroCusto = new ArrayList<>();
+
+    private void limparCampos() {
+        nomeTexto.setText("");
+        horasEfetivasTexto.setText("");
+    }
     
     public void carregarTabela() throws SQLException{
        DataSource dataSource = new DataSource();

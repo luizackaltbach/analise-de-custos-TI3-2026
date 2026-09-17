@@ -1,6 +1,5 @@
 package model;
 
-import java.math.BigDecimal;
 
 /**
  * Entidade da tabela produtos_para_venda.
@@ -11,14 +10,14 @@ public class ProdutosParaVenda {
     private String codigo;
     private String nome;
     private String unidade;
-    private BigDecimal quantidade;
-    private BigDecimal custoGeral;
-    private BigDecimal custoUnitario;
+    private double quantidade;
+    private double custoGeral;
+    private double custoUnitario;
 
     public ProdutosParaVenda() {
     }
 
-    public ProdutosParaVenda(String codigo, String nome, String unidade, BigDecimal quantidade, BigDecimal custoGeral, BigDecimal custoUnitario) {
+    public ProdutosParaVenda(String codigo, String nome, String unidade, double quantidade, double custoGeral, double custoUnitario) {
         this.codigo = codigo;
         this.nome = nome;
         this.unidade = unidade;
@@ -59,27 +58,27 @@ public class ProdutosParaVenda {
         this.unidade = unidade;
     }
 
-    public BigDecimal getQuantidade() {
+    public double getQuantidade() {
         return quantidade;
     }
 
-    public void setQuantidade(BigDecimal quantidade) {
+    public void setQuantidade(double quantidade) {
         this.quantidade = quantidade;
     }
 
-    public BigDecimal getCustoGeral() {
+    public double getCustoGeral() {
         return custoGeral;
     }
 
-    public void setCustoGeral(BigDecimal custoGeral) {
+    public void setCustoGeral(double custoGeral) {
         this.custoGeral = custoGeral;
     }
 
-    public BigDecimal getCustoUnitario() {
+    public double getCustoUnitario() {
         return custoUnitario;
     }
 
-    public void setCustoUnitario(BigDecimal custoUnitario) {
+    public void setCustoUnitario(double custoUnitario) {
         this.custoUnitario = custoUnitario;
     }
 

@@ -26,9 +26,9 @@ public class ProdutosParaVendaDAO {
             ps.setString(1, obj.getCodigo());
             ps.setString(2, obj.getNome());
             ps.setString(3, obj.getUnidade());
-            ps.setBigDecimal(4, obj.getQuantidade());
-            ps.setBigDecimal(5, obj.getCustoGeral());
-            ps.setBigDecimal(6, obj.getCustoUnitario());
+            ps.setDouble(4, obj.getQuantidade());
+            ps.setDouble(5, obj.getCustoGeral());
+            ps.setDouble(6, obj.getCustoUnitario());
             ps.executeUpdate();
         }
     }
@@ -40,9 +40,9 @@ public class ProdutosParaVendaDAO {
             ps.setString(1, obj.getCodigo());
             ps.setString(2, obj.getNome());
             ps.setString(3, obj.getUnidade());
-            ps.setBigDecimal(4, obj.getQuantidade());
-            ps.setBigDecimal(5, obj.getCustoGeral());
-            ps.setBigDecimal(6, obj.getCustoUnitario());
+            ps.setDouble(4, obj.getQuantidade());
+            ps.setDouble(5, obj.getCustoGeral());
+            ps.setDouble(6, obj.getCustoUnitario());
             ps.setInt(7, obj.getId());
             ps.executeUpdate();
         }
@@ -87,9 +87,9 @@ public class ProdutosParaVendaDAO {
         obj.setCodigo(rs.getString("codigo"));
         obj.setNome(rs.getString("nome"));
         obj.setUnidade(rs.getString("unidade"));
-        obj.setQuantidade(rs.getBigDecimal("quantidade"));
-        obj.setCustoGeral(rs.getBigDecimal("custo_geral"));
-        obj.setCustoUnitario(rs.getBigDecimal("custo_unitario"));
+        obj.setQuantidade(rs.getDouble("quantidade"));
+        obj.setCustoGeral(rs.getDouble("custo_geral"));
+        obj.setCustoUnitario(rs.getDouble("custo_unitario"));
         return obj;
     }
 }

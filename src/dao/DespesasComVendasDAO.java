@@ -24,7 +24,7 @@ public class DespesasComVendasDAO {
         Connection con = dataSource.getConnection();
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, obj.getNomeConta());
-            ps.setBigDecimal(2, obj.getPercentual());
+            ps.setDouble(2, obj.getPercentual());
             ps.executeUpdate();
         }
     }
@@ -34,7 +34,7 @@ public class DespesasComVendasDAO {
         Connection con = dataSource.getConnection();
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, obj.getNomeConta());
-            ps.setBigDecimal(2, obj.getPercentual());
+            ps.setDouble(2, obj.getPercentual());
             ps.setInt(3, obj.getId());
             ps.executeUpdate();
         }
@@ -77,7 +77,7 @@ public class DespesasComVendasDAO {
         DespesasComVendas obj = new DespesasComVendas();
         obj.setId(rs.getInt("id"));
         obj.setNomeConta(rs.getString("nome_conta"));
-        obj.setPercentual(rs.getBigDecimal("percentual"));
+        obj.setPercentual(rs.getDouble("percentual"));
         return obj;
     }
 }

@@ -24,9 +24,9 @@ public class CapitalDeGiroDAO {
         Connection con = dataSource.getConnection();
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, obj.getSituacao());
-            ps.setBigDecimal(2, obj.getPrazoMedioDias());
-            ps.setBigDecimal(3, obj.getInvestimentoVariavel());
-            ps.setBigDecimal(4, obj.getPeriodo());
+            ps.setDouble(2, obj.getPrazoMedioDias());
+            ps.setDouble(3, obj.getInvestimentoVariavel());
+            ps.setDouble(4, obj.getPeriodo());
             ps.executeUpdate();
         }
     }
@@ -36,9 +36,9 @@ public class CapitalDeGiroDAO {
         Connection con = dataSource.getConnection();
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, obj.getSituacao());
-            ps.setBigDecimal(2, obj.getPrazoMedioDias());
-            ps.setBigDecimal(3, obj.getInvestimentoVariavel());
-            ps.setBigDecimal(4, obj.getPeriodo());
+            ps.setDouble(2, obj.getPrazoMedioDias());
+            ps.setDouble(3, obj.getInvestimentoVariavel());
+            ps.setDouble(4, obj.getPeriodo());
             ps.setInt(5, obj.getId());
             ps.executeUpdate();
         }
@@ -81,9 +81,9 @@ public class CapitalDeGiroDAO {
         CapitalDeGiro obj = new CapitalDeGiro();
         obj.setId(rs.getInt("id"));
         obj.setSituacao(rs.getString("situacao"));
-        obj.setPrazoMedioDias(rs.getBigDecimal("prazo_medio_dias"));
-        obj.setInvestimentoVariavel(rs.getBigDecimal("investimento_variavel"));
-        obj.setPeriodo(rs.getBigDecimal("periodo"));
+        obj.setPrazoMedioDias(rs.getDouble("prazo_medio_dias"));
+        obj.setInvestimentoVariavel(rs.getDouble("investimento_variavel"));
+        obj.setPeriodo(rs.getDouble("periodo"));
         return obj;
     }
 }

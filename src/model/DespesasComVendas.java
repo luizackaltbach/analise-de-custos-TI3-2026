@@ -1,6 +1,5 @@
 package model;
 
-import java.math.BigDecimal;
 
 /**
  * Entidade da tabela despesas_com_vendas.
@@ -9,12 +8,12 @@ public class DespesasComVendas {
 
     private int id;
     private String nomeConta;
-    private BigDecimal percentual;
+    private double percentual;
 
     public DespesasComVendas() {
     }
 
-    public DespesasComVendas(String nomeConta, BigDecimal percentual) {
+    public DespesasComVendas(String nomeConta, double percentual) {
         this.nomeConta = nomeConta;
         this.percentual = percentual;
     }
@@ -35,11 +34,11 @@ public class DespesasComVendas {
         this.nomeConta = nomeConta;
     }
 
-    public BigDecimal getPercentual() {
+    public double getPercentual() {
         return percentual;
     }
 
-    public void setPercentual(BigDecimal percentual) {
+    public void setPercentual(double percentual) {
         this.percentual = percentual;
     }
 

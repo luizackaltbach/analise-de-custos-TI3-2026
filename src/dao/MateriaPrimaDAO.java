@@ -26,8 +26,8 @@ public class MateriaPrimaDAO {
             ps.setString(1, obj.getCodigo());
             ps.setString(2, obj.getNome());
             ps.setString(3, obj.getUnidade());
-            ps.setBigDecimal(4, obj.getQuantidadeEstoque());
-            ps.setBigDecimal(5, obj.getCustoReposicao());
+            ps.setDouble(4, obj.getQuantidadeEstoque());
+            ps.setDouble(5, obj.getCustoReposicao());
             ps.executeUpdate();
         }
     }
@@ -39,8 +39,8 @@ public class MateriaPrimaDAO {
             ps.setString(1, obj.getCodigo());
             ps.setString(2, obj.getNome());
             ps.setString(3, obj.getUnidade());
-            ps.setBigDecimal(4, obj.getQuantidadeEstoque());
-            ps.setBigDecimal(5, obj.getCustoReposicao());
+            ps.setDouble(4, obj.getQuantidadeEstoque());
+            ps.setDouble(5, obj.getCustoReposicao());
             ps.setInt(6, obj.getId());
             ps.executeUpdate();
         }
@@ -85,8 +85,8 @@ public class MateriaPrimaDAO {
         obj.setCodigo(rs.getString("codigo"));
         obj.setNome(rs.getString("nome"));
         obj.setUnidade(rs.getString("unidade"));
-        obj.setQuantidadeEstoque(rs.getBigDecimal("quantidade_estoque"));
-        obj.setCustoReposicao(rs.getBigDecimal("custo_reposicao"));
+        obj.setQuantidadeEstoque(rs.getDouble("quantidade_estoque"));
+        obj.setCustoReposicao(rs.getDouble("custo_reposicao"));
         return obj;
     }
 }

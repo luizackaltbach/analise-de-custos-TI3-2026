@@ -26,13 +26,13 @@ public class CadastroEstoqueDAO {
             ps.setString(1, obj.getCodigo());
             ps.setString(2, obj.getProduto());
             ps.setString(3, obj.getUnidade());
-            ps.setBigDecimal(4, obj.getQuantidadeAnterior());
-            ps.setBigDecimal(5, obj.getQuantidade());
-            ps.setBigDecimal(6, obj.getCustoAnterior());
-            ps.setBigDecimal(7, obj.getCusto());
-            ps.setBigDecimal(8, obj.getCustoMedio());
-            ps.setBigDecimal(9, obj.getVenda());
-            ps.setBigDecimal(10, obj.getTotal());
+            ps.setDouble(4, obj.getQuantidadeAnterior());
+            ps.setDouble(5, obj.getQuantidade());
+            ps.setDouble(6, obj.getCustoAnterior());
+            ps.setDouble(7, obj.getCusto());
+            ps.setDouble(8, obj.getCustoMedio());
+            ps.setDouble(9, obj.getVenda());
+            ps.setDouble(10, obj.getTotal());
             ps.executeUpdate();
         }
     }
@@ -44,13 +44,13 @@ public class CadastroEstoqueDAO {
             ps.setString(1, obj.getCodigo());
             ps.setString(2, obj.getProduto());
             ps.setString(3, obj.getUnidade());
-            ps.setBigDecimal(4, obj.getQuantidadeAnterior());
-            ps.setBigDecimal(5, obj.getQuantidade());
-            ps.setBigDecimal(6, obj.getCustoAnterior());
-            ps.setBigDecimal(7, obj.getCusto());
-            ps.setBigDecimal(8, obj.getCustoMedio());
-            ps.setBigDecimal(9, obj.getVenda());
-            ps.setBigDecimal(10, obj.getTotal());
+            ps.setDouble(4, obj.getQuantidadeAnterior());
+            ps.setDouble(5, obj.getQuantidade());
+            ps.setDouble(6, obj.getCustoAnterior());
+            ps.setDouble(7, obj.getCusto());
+            ps.setDouble(8, obj.getCustoMedio());
+            ps.setDouble(9, obj.getVenda());
+            ps.setDouble(10, obj.getTotal());
             ps.setInt(11, obj.getId());
             ps.executeUpdate();
         }
@@ -95,13 +95,13 @@ public class CadastroEstoqueDAO {
         obj.setCodigo(rs.getString("codigo"));
         obj.setProduto(rs.getString("produto"));
         obj.setUnidade(rs.getString("unidade"));
-        obj.setQuantidadeAnterior(rs.getBigDecimal("quantidade_anterior"));
-        obj.setQuantidade(rs.getBigDecimal("quantidade"));
-        obj.setCustoAnterior(rs.getBigDecimal("custo_anterior"));
-        obj.setCusto(rs.getBigDecimal("custo"));
-        obj.setCustoMedio(rs.getBigDecimal("custo_medio"));
-        obj.setVenda(rs.getBigDecimal("venda"));
-        obj.setTotal(rs.getBigDecimal("total"));
+        obj.setQuantidadeAnterior(rs.getDouble("quantidade_anterior"));
+        obj.setQuantidade(rs.getDouble("quantidade"));
+        obj.setCustoAnterior(rs.getDouble("custo_anterior"));
+        obj.setCusto(rs.getDouble("custo"));
+        obj.setCustoMedio(rs.getDouble("custo_medio"));
+        obj.setVenda(rs.getDouble("venda"));
+        obj.setTotal(rs.getDouble("total"));
         return obj;
     }
 }

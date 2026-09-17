@@ -1,6 +1,5 @@
 package model;
 
-import java.math.BigDecimal;
 
 /**
  * Entidade da tabela custo_por_hora.
@@ -10,13 +9,13 @@ public class CustoPorHora {
     private int id;
     private int idCentroCusto;
     private int idGastoGeral;
-    private BigDecimal valor;
-    private BigDecimal custoMinuto;
+    private double valor;
+    private double custoMinuto;
 
     public CustoPorHora() {
     }
 
-    public CustoPorHora(int idCentroCusto, int idGastoGeral, BigDecimal valor, BigDecimal custoMinuto) {
+    public CustoPorHora(int idCentroCusto, int idGastoGeral, double valor, double custoMinuto) {
         this.idCentroCusto = idCentroCusto;
         this.idGastoGeral = idGastoGeral;
         this.valor = valor;
@@ -47,19 +46,19 @@ public class CustoPorHora {
         this.idGastoGeral = idGastoGeral;
     }
 
-    public BigDecimal getValor() {
+    public double getValor() {
         return valor;
     }
 
-    public void setValor(BigDecimal valor) {
+    public void setValor(double valor) {
         this.valor = valor;
     }
 
-    public BigDecimal getCustoMinuto() {
+    public double getCustoMinuto() {
         return custoMinuto;
     }
 
-    public void setCustoMinuto(BigDecimal custoMinuto) {
+    public void setCustoMinuto(double custoMinuto) {
         this.custoMinuto = custoMinuto;
     }
 

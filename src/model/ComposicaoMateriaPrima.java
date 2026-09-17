@@ -1,6 +1,5 @@
 package model;
 
-import java.math.BigDecimal;
 
 /**
  * Entidade da tabela composicao_materia_prima.
@@ -10,14 +9,14 @@ public class ComposicaoMateriaPrima {
     private int id;
     private int idProdutoVenda;
     private int idMateriaPrima;
-    private BigDecimal quantidade;
-    private BigDecimal custoReposicao;
-    private BigDecimal total;  // calculada pelo banco
+    private double quantidade;
+    private double custoReposicao;
+    private double total;  // calculada pelo banco
 
     public ComposicaoMateriaPrima() {
     }
 
-    public ComposicaoMateriaPrima(int idProdutoVenda, int idMateriaPrima, BigDecimal quantidade, BigDecimal custoReposicao) {
+    public ComposicaoMateriaPrima(int idProdutoVenda, int idMateriaPrima, double quantidade, double custoReposicao) {
         this.idProdutoVenda = idProdutoVenda;
         this.idMateriaPrima = idMateriaPrima;
         this.quantidade = quantidade;
@@ -48,27 +47,27 @@ public class ComposicaoMateriaPrima {
         this.idMateriaPrima = idMateriaPrima;
     }
 
-    public BigDecimal getQuantidade() {
+    public double getQuantidade() {
         return quantidade;
     }
 
-    public void setQuantidade(BigDecimal quantidade) {
+    public void setQuantidade(double quantidade) {
         this.quantidade = quantidade;
     }
 
-    public BigDecimal getCustoReposicao() {
+    public double getCustoReposicao() {
         return custoReposicao;
     }
 
-    public void setCustoReposicao(BigDecimal custoReposicao) {
+    public void setCustoReposicao(double custoReposicao) {
         this.custoReposicao = custoReposicao;
     }
 
-    public BigDecimal getTotal() {
+    public double getTotal() {
         return total;
     }
 
-    public void setTotal(BigDecimal total) {
+    public void setTotal(double total) {
         this.total = total;
     }
 

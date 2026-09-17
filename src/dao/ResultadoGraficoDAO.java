@@ -24,9 +24,9 @@ public class ResultadoGraficoDAO {
         Connection con = dataSource.getConnection();
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, obj.getIdResultado());
-            ps.setBigDecimal(2, obj.getQuantidadeVenda());
-            ps.setBigDecimal(3, obj.getReceitaTotal());
-            ps.setBigDecimal(4, obj.getCustoTotal());
+            ps.setDouble(2, obj.getQuantidadeVenda());
+            ps.setDouble(3, obj.getReceitaTotal());
+            ps.setDouble(4, obj.getCustoTotal());
             ps.executeUpdate();
         }
     }
@@ -36,9 +36,9 @@ public class ResultadoGraficoDAO {
         Connection con = dataSource.getConnection();
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, obj.getIdResultado());
-            ps.setBigDecimal(2, obj.getQuantidadeVenda());
-            ps.setBigDecimal(3, obj.getReceitaTotal());
-            ps.setBigDecimal(4, obj.getCustoTotal());
+            ps.setDouble(2, obj.getQuantidadeVenda());
+            ps.setDouble(3, obj.getReceitaTotal());
+            ps.setDouble(4, obj.getCustoTotal());
             ps.setInt(5, obj.getId());
             ps.executeUpdate();
         }
@@ -81,10 +81,10 @@ public class ResultadoGraficoDAO {
         ResultadoGrafico obj = new ResultadoGrafico();
         obj.setId(rs.getInt("id"));
         obj.setIdResultado(rs.getInt("id_resultado"));
-        obj.setQuantidadeVenda(rs.getBigDecimal("quantidade_venda"));
-        obj.setReceitaTotal(rs.getBigDecimal("receita_total"));
-        obj.setCustoTotal(rs.getBigDecimal("custo_total"));
-        obj.setLucroPrejuizo(rs.getBigDecimal("lucro_prejuizo"));
+        obj.setQuantidadeVenda(rs.getDouble("quantidade_venda"));
+        obj.setReceitaTotal(rs.getDouble("receita_total"));
+        obj.setCustoTotal(rs.getDouble("custo_total"));
+        obj.setLucroPrejuizo(rs.getDouble("lucro_prejuizo"));
         return obj;
     }
 }

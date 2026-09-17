@@ -1,6 +1,5 @@
 package model;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /**
@@ -12,15 +11,15 @@ public class PrevisaoReposicaoEstoque {
     private LocalDate competencia;
     private int sequencia;
     private int idMateriaPrima;
-    private BigDecimal quantidade;
-    private BigDecimal custoReposicao;
-    private BigDecimal outrosGastos;
-    private BigDecimal gastosTotais;  // calculada pelo banco
+    private double quantidade;
+    private double custoReposicao;
+    private double outrosGastos;
+    private double gastosTotais;  // calculada pelo banco
 
     public PrevisaoReposicaoEstoque() {
     }
 
-    public PrevisaoReposicaoEstoque(LocalDate competencia, int sequencia, int idMateriaPrima, BigDecimal quantidade, BigDecimal custoReposicao, BigDecimal outrosGastos) {
+    public PrevisaoReposicaoEstoque(LocalDate competencia, int sequencia, int idMateriaPrima, double quantidade, double custoReposicao, double outrosGastos) {
         this.competencia = competencia;
         this.sequencia = sequencia;
         this.idMateriaPrima = idMateriaPrima;
@@ -61,35 +60,35 @@ public class PrevisaoReposicaoEstoque {
         this.idMateriaPrima = idMateriaPrima;
     }
 
-    public BigDecimal getQuantidade() {
+    public double getQuantidade() {
         return quantidade;
     }
 
-    public void setQuantidade(BigDecimal quantidade) {
+    public void setQuantidade(double quantidade) {
         this.quantidade = quantidade;
     }
 
-    public BigDecimal getCustoReposicao() {
+    public double getCustoReposicao() {
         return custoReposicao;
     }
 
-    public void setCustoReposicao(BigDecimal custoReposicao) {
+    public void setCustoReposicao(double custoReposicao) {
         this.custoReposicao = custoReposicao;
     }
 
-    public BigDecimal getOutrosGastos() {
+    public double getOutrosGastos() {
         return outrosGastos;
     }
 
-    public void setOutrosGastos(BigDecimal outrosGastos) {
+    public void setOutrosGastos(double outrosGastos) {
         this.outrosGastos = outrosGastos;
     }
 
-    public BigDecimal getGastosTotais() {
+    public double getGastosTotais() {
         return gastosTotais;
     }
 
-    public void setGastosTotais(BigDecimal gastosTotais) {
+    public void setGastosTotais(double gastosTotais) {
         this.gastosTotais = gastosTotais;
     }
 
