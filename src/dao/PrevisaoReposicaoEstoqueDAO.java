@@ -8,9 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import model.PrevisaoReposicaoEstoque;
 
-/**
- * Acesso a dados da tabela previsao_reposicao_estoque.
- */
+
+
 public class PrevisaoReposicaoEstoqueDAO {
 
     private final DataSource dataSource;
