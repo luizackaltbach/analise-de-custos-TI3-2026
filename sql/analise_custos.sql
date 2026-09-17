@@ -10,7 +10,6 @@ CREATE TABLE materia_prima (
   codigo             VARCHAR(15),
   nome               VARCHAR(50),
   unidade            VARCHAR(15),
-  quantidade_estoque DECIMAL(12,3) DEFAULT 0,
   custo_reposicao    DECIMAL(13,4) DEFAULT 0,
   PRIMARY KEY (id)
 ) ENGINE=InnoDB;

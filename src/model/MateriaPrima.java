@@ -6,17 +6,15 @@ public class MateriaPrima {
     private String codigo;
     private String nome;
     private String unidade;
-    private double quantidadeEstoque;
     private double custoReposicao;
 
     public MateriaPrima() {
     }
 
-    public MateriaPrima(String codigo, String nome, String unidade, double quantidadeEstoque, double custoReposicao) {
+    public MateriaPrima(String codigo, String nome, String unidade, double custoReposicao) {
         this.codigo = codigo;
         this.nome = nome;
         this.unidade = unidade;
-        this.quantidadeEstoque = quantidadeEstoque;
         this.custoReposicao = custoReposicao;
     }
 
@@ -52,14 +50,6 @@ public class MateriaPrima {
         this.unidade = unidade;
     }
 
-    public double getQuantidadeEstoque() {
-        return quantidadeEstoque;
-    }
-
-    public void setQuantidadeEstoque(double quantidadeEstoque) {
-        this.quantidadeEstoque = quantidadeEstoque;
-    }
-
     public double getCustoReposicao() {
         return custoReposicao;
     }
@@ -70,6 +60,6 @@ public class MateriaPrima {
 
     @Override
     public String toString() {
-        return "MateriaPrima{" + "id=" + id + ", codigo=" + codigo + ", nome=" + nome + ", unidade=" + unidade + ", quantidadeEstoque=" + quantidadeEstoque + ", custoReposicao=" + custoReposicao + "}";
+        return "MateriaPrima{" + "id=" + id + ", codigo=" + codigo + ", nome=" + nome + ", unidade=" + unidade + ", custoReposicao=" + custoReposicao + "}";
     }
 }

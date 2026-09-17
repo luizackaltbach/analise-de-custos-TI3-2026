@@ -17,28 +17,26 @@ public class MateriaPrimaDAO {
     }
 
     public void inserir(MateriaPrima obj) throws SQLException {
-        String sql = "INSERT INTO materia_prima (codigo, nome, unidade, quantidade_estoque, custo_reposicao) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO materia_prima (codigo, nome, unidade, custo_reposicao) VALUES (?, ?, ?, ?)";
         Connection con = dataSource.getConnection();
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, obj.getCodigo());
             ps.setString(2, obj.getNome());
             ps.setString(3, obj.getUnidade());
-            ps.setDouble(4, obj.getQuantidadeEstoque());
-            ps.setDouble(5, obj.getCustoReposicao());
+            ps.setDouble(4, obj.getCustoReposicao());
             ps.executeUpdate();
         }
     }
 
     public void alterar(MateriaPrima obj) throws SQLException {
-        String sql = "UPDATE materia_prima SET codigo = ?, nome = ?, unidade = ?, quantidade_estoque = ?, custo_reposicao = ? WHERE id = ?";
+        String sql = "UPDATE materia_prima SET codigo = ?, nome = ?, unidade = ?, custo_reposicao = ? WHERE id = ?";
         Connection con = dataSource.getConnection();
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, obj.getCodigo());
             ps.setString(2, obj.getNome());
             ps.setString(3, obj.getUnidade());
-            ps.setDouble(4, obj.getQuantidadeEstoque());
-            ps.setDouble(5, obj.getCustoReposicao());
-            ps.setInt(6, obj.getId());
+            ps.setDouble(4, obj.getCustoReposicao());
+            ps.setInt(5, obj.getId());
             ps.executeUpdate();
         }
     }
@@ -82,7 +80,6 @@ public class MateriaPrimaDAO {
         obj.setCodigo(rs.getString("codigo"));
         obj.setNome(rs.getString("nome"));
         obj.setUnidade(rs.getString("unidade"));
-        obj.setQuantidadeEstoque(rs.getDouble("quantidade_estoque"));
         obj.setCustoReposicao(rs.getDouble("custo_reposicao"));
         return obj;
     }

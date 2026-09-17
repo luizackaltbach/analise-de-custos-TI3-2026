@@ -33,7 +33,7 @@ public class ListagemMateria extends javax.swing.JInternalFrame {
         for (MateriaPrima m : materias) {
             model.addRow(new Object[]{
                 m.getCodigo(), m.getNome(), m.getUnidade(),
-                m.getCustoReposicao(), m.getQuantidadeEstoque()
+                m.getCustoReposicao()
             });
         }
     }
@@ -54,13 +54,13 @@ public class ListagemMateria extends javax.swing.JInternalFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Código", "Produto", "Unidade", "Custo", "Reposição"
+                "Código", "Produto", "Unidade", "Custo reposição"
             }
         ));
         jScrollPane1.setViewportView(jTable1);

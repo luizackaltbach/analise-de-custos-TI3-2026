@@ -34,8 +34,6 @@ public class CadastroMateriaPrima extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         custoReposicaoTexto = new javax.swing.JTextField();
-        quantidadeTexto = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
         unidadeCombo = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
         incluirBotao = new javax.swing.JButton();
@@ -61,8 +59,6 @@ public class CadastroMateriaPrima extends javax.swing.JInternalFrame {
 
         jLabel5.setText("Custo Reposição");
 
-        jLabel7.setText("Quantidade");
-
         unidadeCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "  Kg", "  g", "  L", "  ml", "  un", "  m", "  m²", "  cx", "  pc" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -72,14 +68,10 @@ public class CadastroMateriaPrima extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(custoReposicaoTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(custoReposicaoTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(quantidadeTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(nomeTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -91,7 +83,7 @@ public class CadastroMateriaPrima extends javax.swing.JInternalFrame {
                         .addComponent(codigoTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(unidadeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(364, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -105,20 +97,13 @@ public class CadastroMateriaPrima extends javax.swing.JInternalFrame {
                     .addComponent(codigoTexto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(unidadeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(nomeTexto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(custoReposicaoTexto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(quantidadeTexto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addGap(29, 29, 29)))
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(nomeTexto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(custoReposicaoTexto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
@@ -157,13 +142,13 @@ public class CadastroMateriaPrima extends javax.swing.JInternalFrame {
 
         tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "CÓDIGO", "MATÉRIA", "QUANTIDADE", "UNIDADE", "CUSTO REPOSIÇÃO"
+                "CÓDIGO", "MATÉRIA", "UNIDADE", "CUSTO REPOSIÇÃO"
             }
         ));
         tabela.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -226,10 +211,9 @@ public class CadastroMateriaPrima extends javax.swing.JInternalFrame {
             String codigo = codigoTexto.getText();
             String nome = nomeTexto.getText();
             String unidade = String.valueOf(unidadeCombo.getSelectedItem());
-            double quantidade = Double.parseDouble(quantidadeTexto.getText());
             double custoReposicao = Double.parseDouble(custoReposicaoTexto.getText());
 
-            MateriaPrima materiaPrima = new MateriaPrima(codigo, nome, unidade, quantidade, custoReposicao);
+            MateriaPrima materiaPrima = new MateriaPrima(codigo, nome, unidade, custoReposicao);
 
             dao.inserir(materiaPrima);
             JOptionPane.showMessageDialog(this, "Matéria prima cadastrada com sucesso!");
@@ -248,7 +232,6 @@ public class CadastroMateriaPrima extends javax.swing.JInternalFrame {
             m.setCodigo(codigoTexto.getText());
             m.setNome(nomeTexto.getText());
             m.setUnidade(String.valueOf(unidadeCombo.getSelectedItem()));
-            m.setQuantidadeEstoque(Double.parseDouble(quantidadeTexto.getText()));
             m.setCustoReposicao(Double.parseDouble(custoReposicaoTexto.getText()));
 
             dao.alterar(m);
@@ -266,7 +249,6 @@ public class CadastroMateriaPrima extends javax.swing.JInternalFrame {
         codigoTexto.setText(m.getCodigo());
         nomeTexto.setText(m.getNome());
         unidadeCombo.setSelectedItem(m.getUnidade());
-        quantidadeTexto.setText(String.valueOf(m.getQuantidadeEstoque()));
         custoReposicaoTexto.setText(String.valueOf(m.getCustoReposicao()));
     }//GEN-LAST:event_tabelaMouseClicked
 
@@ -282,7 +264,7 @@ public class CadastroMateriaPrima extends javax.swing.JInternalFrame {
         model.setRowCount(0);
         for (MateriaPrima m : materiasPrimas) {
             model.addRow(new Object[]{
-                m.getCodigo(), m.getNome(), m.getQuantidadeEstoque(), m.getUnidade(), m.getCustoReposicao()
+                m.getCodigo(), m.getNome(), m.getUnidade(), m.getCustoReposicao()
             });
         }
     }
@@ -290,7 +272,6 @@ public class CadastroMateriaPrima extends javax.swing.JInternalFrame {
     private void limparCampos() {
         codigoTexto.setText("");
         nomeTexto.setText("");
-        quantidadeTexto.setText("");
         custoReposicaoTexto.setText("");
         unidadeCombo.setSelectedIndex(0);
     }
@@ -307,13 +288,11 @@ public class CadastroMateriaPrima extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField nomeTexto;
-    private javax.swing.JTextField quantidadeTexto;
     private javax.swing.JTable tabela;
     private javax.swing.JComboBox<String> unidadeCombo;
     // End of variables declaration//GEN-END:variables
