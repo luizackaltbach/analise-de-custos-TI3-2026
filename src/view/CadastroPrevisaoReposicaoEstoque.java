@@ -4,6 +4,7 @@ import dao.DataSource;
 import dao.MateriaPrimaDAO;
 import dao.PrevisaoReposicaoEstoqueDAO;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.*;
 import java.util.ArrayList;
@@ -29,24 +30,16 @@ public class CadastroPrevisaoReposicaoEstoque extends JInternalFrame {
     public CadastroPrevisaoReposicaoEstoque() {
         initComponents();
 
-        configurarCampos();
         carregarMaterias();
         carregarTabela();
     }
 
-    private void configurarCampos() {
-        try {
-            javax.swing.text.MaskFormatter mascara =
-                    new javax.swing.text.MaskFormatter("##/##/####");
+    private void configurarCampos() throws ParseException {
+            javax.swing.text.MaskFormatter mascara = new javax.swing.text.MaskFormatter("##/##/####");
             mascara.setPlaceholderCharacter('_');
             competenciaData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(mascara));
             competenciaData.setValue(null);
-        } catch (java.text.ParseException e) {
-            throw new IllegalStateException("Erro ao configurar a máscara.", e);
-        }
-
-        gastosTotaisTexto.setEditable(false);
-    }
+        } 
 
     private LocalDate competencia() {
         return LocalDate.parse(competenciaData.getText(), FORMATO_DATA);
