@@ -30,63 +30,29 @@ public class CadastroPrevisaoReposicaoEstoque extends JInternalFrame {
     public CadastroPrevisaoReposicaoEstoque() {
         initComponents();
 
-        carregarMaterias();
-        carregarTabela();
-    }
-
-    private void configurarCampos() throws ParseException {
+        try {
             javax.swing.text.MaskFormatter mascara = new javax.swing.text.MaskFormatter("##/##/####");
             mascara.setPlaceholderCharacter('_');
             competenciaData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(mascara));
             competenciaData.setValue(null);
-        } 
-
-    private LocalDate competencia() {
-        return LocalDate.parse(competenciaData.getText(), FORMATO_DATA);
-    }
-
-    private MateriaPrima materia() {
-        return materias.get(matprimaBox.getSelectedIndex());
-    }
-
-    /**
-     * gastos_totais = (quantidade × custo_reposicao) + outros_gastos
-     */
-    private double gastosTotais(double quantidade, double custoReposicao, double outrosGastos) {
-        return (quantidade * custoReposicao) + outrosGastos;
-    }
-
-    private void total() {
-        double gastosTotais = gastosTotais(
-                Double.parseDouble(quantidadeTexto.getText()),
-                Double.parseDouble(custoReposicao.getText()),
-                Double.parseDouble(outrosGastosTexto.getText()));
-
-        gastosTotaisTexto.setText(String.valueOf(gastosTotais));
-    }
-
-    private MateriaPrima buscarMateria(int id) {
-        for (MateriaPrima m : materias) {
-            if (m.getId() == id) {
-                return m;
-            }
+        } catch (ParseException e) {
+            JOptionPane.showMessageDialog(this, "Erro ao configurar a máscara: " + e.getMessage());
         }
-        return null;
-    }
 
-    private void selecionarMateria(int id) {
-        for (int i = 0; i < materias.size(); i++) {
-            if (materias.get(i).getId() == id) {
-                matprimaBox.setSelectedIndex(i);
-            }
-        }
+        carregarMaterias();
+        carregarTabela();
     }
 
     private void incluirBotaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_incluirBotaoActionPerformed
-        MateriaPrima m = materia();
+        MateriaPrima m = materias.get(matprimaBox.getSelectedIndex());
 
         PrevisaoReposicaoEstoque p = new PrevisaoReposicaoEstoque();
-        preencher(p, m);
+        p.setCompetencia(LocalDate.parse(competenciaData.getText(), FORMATO_DATA));
+        p.setSequencia(Integer.parseInt(sequenciaTexto.getText()));
+        p.setIdMateriaPrima(m.getId());
+        p.setQuantidade(Double.parseDouble(quantidadeTexto.getText()));
+        p.setCustoReposicao(Double.parseDouble(custoReposicao.getText()));
+        p.setOutrosGastos(Double.parseDouble(outrosGastosTexto.getText()));
 
         try {
             dao.inserir(p);
@@ -100,9 +66,15 @@ public class CadastroPrevisaoReposicaoEstoque extends JInternalFrame {
 
     private void atualizarBotaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atualizarBotaoActionPerformed
         int linha = reposicaoTable.getSelectedRow();
+        MateriaPrima m = materias.get(matprimaBox.getSelectedIndex());
 
         PrevisaoReposicaoEstoque p = previsoes.get(linha);
-        preencher(p, materia());
+        p.setCompetencia(LocalDate.parse(competenciaData.getText(), FORMATO_DATA));
+        p.setSequencia(Integer.parseInt(sequenciaTexto.getText()));
+        p.setIdMateriaPrima(m.getId());
+        p.setQuantidade(Double.parseDouble(quantidadeTexto.getText()));
+        p.setCustoReposicao(Double.parseDouble(custoReposicao.getText()));
+        p.setOutrosGastos(Double.parseDouble(outrosGastosTexto.getText()));
 
         try {
             dao.alterar(p);
@@ -112,15 +84,6 @@ public class CadastroPrevisaoReposicaoEstoque extends JInternalFrame {
             JOptionPane.showMessageDialog(this, "Erro ao atualizar: " + e.getMessage());
         }
     }//GEN-LAST:event_atualizarBotaoActionPerformed
-
-    private void preencher(PrevisaoReposicaoEstoque p, MateriaPrima m) {
-        p.setCompetencia(competencia());
-        p.setSequencia(Integer.parseInt(sequenciaTexto.getText()));
-        p.setIdMateriaPrima(m.getId());
-        p.setQuantidade(Double.parseDouble(quantidadeTexto.getText()));
-        p.setCustoReposicao(Double.parseDouble(custoReposicao.getText()));
-        p.setOutrosGastos(Double.parseDouble(outrosGastosTexto.getText()));
-    }
 
     private void excluirBotaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirBotaoActionPerformed
         int linha = reposicaoTable.getSelectedRow();
@@ -144,12 +107,15 @@ public class CadastroPrevisaoReposicaoEstoque extends JInternalFrame {
         PrevisaoReposicaoEstoque p = previsoes.get(linha);
         competenciaData.setText(p.getCompetencia().format(FORMATO_DATA));
         sequenciaTexto.setText(String.valueOf(p.getSequencia()));
-        selecionarMateria(p.getIdMateriaPrima());
         quantidadeTexto.setText(String.valueOf(p.getQuantidade()));
         custoReposicao.setText(String.valueOf(p.getCustoReposicao()));
         outrosGastosTexto.setText(String.valueOf(p.getOutrosGastos()));
 
-        total();
+        for (int i = 0; i < materias.size(); i++) {
+            if (materias.get(i).getId() == p.getIdMateriaPrima()) {
+                matprimaBox.setSelectedIndex(i);
+            }
+        }
     }//GEN-LAST:event_reposicaoTableMouseClicked
 
     private void carregarMaterias() {
@@ -177,7 +143,15 @@ public class CadastroPrevisaoReposicaoEstoque extends JInternalFrame {
         DefaultTableModel model = (DefaultTableModel) reposicaoTable.getModel();
         model.setRowCount(0);
         for (PrevisaoReposicaoEstoque p : previsoes) {
-            MateriaPrima m = buscarMateria(p.getIdMateriaPrima());
+            MateriaPrima m = null;
+            for (MateriaPrima materia : materias) {
+                if (materia.getId() == p.getIdMateriaPrima()) {
+                    m = materia;
+                }
+            }
+
+            // gastos_totais = (quantidade × custo_reposicao) + outros_gastos
+            double gastosTotais = (p.getQuantidade() * p.getCustoReposicao()) + p.getOutrosGastos();
 
             model.addRow(new Object[]{
                 p.getCompetencia().format(FORMATO_DATA),
@@ -187,7 +161,7 @@ public class CadastroPrevisaoReposicaoEstoque extends JInternalFrame {
                 p.getQuantidade(),
                 p.getCustoReposicao(),
                 p.getOutrosGastos(),
-                gastosTotais(p.getQuantidade(), p.getCustoReposicao(), p.getOutrosGastos())
+                gastosTotais
             });
         }
     }
@@ -306,6 +280,7 @@ public class CadastroPrevisaoReposicaoEstoque extends JInternalFrame {
                 return types [columnIndex];
             }
         });
+        reposicaoTable.setEnabled(false);
         reposicaoTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 reposicaoTableMouseClicked(evt);
@@ -339,7 +314,7 @@ public class CadastroPrevisaoReposicaoEstoque extends JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(matprimaBox, javax.swing.GroupLayout.PREFERRED_SIZE, 637, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -348,7 +323,7 @@ public class CadastroPrevisaoReposicaoEstoque extends JInternalFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2)
-                                    .addComponent(sequenciaTexto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(sequenciaTexto)))
                             .addComponent(jLabel3)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(incluirBotao)

@@ -13,6 +13,8 @@ public class PrevisaoCustosFixos {
     private int idGastoGeral;
     private int idCentroCusto;
     private double valor;
+    private double custoHora;
+    private double custoMinuto;
 
     public PrevisaoCustosFixos() {
     }
@@ -73,8 +75,24 @@ public class PrevisaoCustosFixos {
         this.valor = valor;
     }
 
+    public double getCustoHora() {
+        return custoHora;
+    }
+
+    public void setCustoHora(double custoHora) {
+        this.custoHora = custoHora;
+    }
+
+    public double getCustoMinuto() {
+        return custoMinuto;
+    }
+
+    public void setCustoMinuto(double custoMinuto) {
+        this.custoMinuto = custoMinuto;
+    }
+
     @Override
     public String toString() {
-        return "PrevisaoCustosFixos{" + "id=" + id + ", competencia=" + competencia + ", sequencia=" + sequencia + ", idGastoGeral=" + idGastoGeral + ", idCentroCusto=" + idCentroCusto + ", valor=" + valor + "}";
+        return "PrevisaoCustosFixos{" + "id=" + id + ", competencia=" + competencia + ", sequencia=" + sequencia + ", idGastoGeral=" + idGastoGeral + ", idCentroCusto=" + idCentroCusto + ", valor=" + valor + ", custoHora=" + custoHora + ", custoMinuto=" + custoMinuto + "}";
     }
 }

@@ -20,7 +20,7 @@ public class PrevisaoCustosFixosDAO {
     }
 
     public void inserir(PrevisaoCustosFixos obj) throws SQLException {
-        String sql = "INSERT INTO previsao_custos_fixos (competencia, sequencia, id_gasto_geral, id_centro_custo, valor) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO previsao_custos_fixos (competencia, sequencia, id_gasto_geral, id_centro_custo, valor, custo_hora, custo_minuto) VALUES (?, ?, ?, ?, ?, ?, ?)";
         Connection con = dataSource.getConnection();
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setObject(1, obj.getCompetencia());
@@ -28,12 +28,14 @@ public class PrevisaoCustosFixosDAO {
             ps.setInt(3, obj.getIdGastoGeral());
             ps.setInt(4, obj.getIdCentroCusto());
             ps.setDouble(5, obj.getValor());
+            ps.setDouble(6, obj.getCustoHora());
+            ps.setDouble(7, obj.getCustoMinuto());
             ps.executeUpdate();
         }
     }
 
     public void alterar(PrevisaoCustosFixos obj) throws SQLException {
-        String sql = "UPDATE previsao_custos_fixos SET competencia = ?, sequencia = ?, id_gasto_geral = ?, id_centro_custo = ?, valor = ? WHERE id = ?";
+        String sql = "UPDATE previsao_custos_fixos SET competencia = ?, sequencia = ?, id_gasto_geral = ?, id_centro_custo = ?, valor = ?, custo_hora = ?, custo_minuto = ? WHERE id = ?";
         Connection con = dataSource.getConnection();
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setObject(1, obj.getCompetencia());
@@ -41,7 +43,9 @@ public class PrevisaoCustosFixosDAO {
             ps.setInt(3, obj.getIdGastoGeral());
             ps.setInt(4, obj.getIdCentroCusto());
             ps.setDouble(5, obj.getValor());
-            ps.setInt(6, obj.getId());
+            ps.setDouble(6, obj.getCustoHora());
+            ps.setDouble(7, obj.getCustoMinuto());
+            ps.setInt(8, obj.getId());
             ps.executeUpdate();
         }
     }
@@ -87,6 +91,8 @@ public class PrevisaoCustosFixosDAO {
         obj.setIdGastoGeral(rs.getInt("id_gasto_geral"));
         obj.setIdCentroCusto(rs.getInt("id_centro_custo"));
         obj.setValor(rs.getDouble("valor"));
+        obj.setCustoHora(rs.getDouble("custo_hora"));
+        obj.setCustoMinuto(rs.getDouble("custo_minuto"));
         return obj;
     }
 }

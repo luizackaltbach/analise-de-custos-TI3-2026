@@ -42,7 +42,6 @@ public class menu extends javax.swing.JFrame {
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
-        jMenuItem9 = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
         jMenuItem11 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
@@ -110,10 +109,6 @@ public class menu extends javax.swing.JFrame {
         jMenuItem8.setText("Previsão de reposição em estoque");
         jMenuItem8.addActionListener(this::jMenuItem8ActionPerformed);
         jMenu2.add(jMenuItem8);
-
-        jMenuItem9.setText("Custo por hora");
-        jMenuItem9.addActionListener(this::jMenuItem9ActionPerformed);
-        jMenu2.add(jMenuItem9);
 
         jMenuItem10.setText("Despesas com vendas");
         jMenuItem10.addActionListener(this::jMenuItem10ActionPerformed);
@@ -218,10 +213,6 @@ public class menu extends javax.swing.JFrame {
         abrir(new CadastroPrevisaoReposicaoEstoque());
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
-    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
-        abrir(new CadastroCustoPorHora());
-    }//GEN-LAST:event_jMenuItem9ActionPerformed
-
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
         abrir(new CadastroDespesasComVendas());
     }//GEN-LAST:event_jMenuItem10ActionPerformed
@@ -316,6 +307,5 @@ public class menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
     // End of variables declaration//GEN-END:variables
 }

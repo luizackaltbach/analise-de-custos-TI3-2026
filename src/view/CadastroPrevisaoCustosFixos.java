@@ -5,18 +5,43 @@
 
 package view;
 
+import dao.CentroCustoDAO;
+import dao.DataSource;
+import dao.GastosGeraisDAO;
+import dao.PrevisaoCustosFixosDAO;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.CentroCusto;
+import model.GastosGerais;
+import model.PrevisaoCustosFixos;
+
 /**
  *
  * @author natal
  */
 public class CadastroPrevisaoCustosFixos extends javax.swing.JInternalFrame {
-    
+
+    private DataSource ds = new DataSource();
+    private PrevisaoCustosFixosDAO dao = new PrevisaoCustosFixosDAO(ds);
+    private GastosGeraisDAO gastoDao = new GastosGeraisDAO(ds);
+    private CentroCustoDAO centroDao = new CentroCustoDAO(ds);
+
+    private List<PrevisaoCustosFixos> previsoes = new ArrayList<>();
+    private List<GastosGerais> contas = new ArrayList<>();
+    private List<CentroCusto> centros = new ArrayList<>();
 
     /**
      * Creates new form CadastroPrevisaoCustosFixos
      */
     public CadastroPrevisaoCustosFixos() {
         initComponents();
+
+        carregarCombos();
+        carregarTabela();
     }
 
     /**
@@ -43,22 +68,21 @@ public class CadastroPrevisaoCustosFixos extends javax.swing.JInternalFrame {
         jTable1 = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        centroBox = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        contaBox = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        numeroMesTexto = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        anoTexto = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        numeroMesFinalTexto = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        valorTexto = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tabela = new javax.swing.JTable();
         incluirBotao = new javax.swing.JButton();
         atualizarBotao = new javax.swing.JButton();
         excluirBotao = new javax.swing.JButton();
@@ -107,11 +131,11 @@ public class CadastroPrevisaoCustosFixos extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Centro de Custo");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        centroBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel2.setText("Conta de gastos gerais");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        contaBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -119,16 +143,13 @@ public class CadastroPrevisaoCustosFixos extends javax.swing.JInternalFrame {
 
         jLabel4.setText("Até");
 
-        jTextField2.addActionListener(this::jTextField2ActionPerformed);
+        anoTexto.addActionListener(this::anoTextoActionPerformed);
 
         jLabel5.setText("Ano");
 
-        jTextField4.addActionListener(this::jTextField4ActionPerformed);
+        numeroMesFinalTexto.addActionListener(this::numeroMesFinalTextoActionPerformed);
 
         jLabel6.setText("Valor");
-
-        jButton1.setText("Generalizar");
-        jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -138,22 +159,20 @@ public class CadastroPrevisaoCustosFixos extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(numeroMesTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(numeroMesFinalTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(anoTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(126, Short.MAX_VALUE))
+                .addComponent(valorTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(297, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,14 +180,13 @@ public class CadastroPrevisaoCustosFixos extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(numeroMesTexto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel4)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(anoTexto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel5)
-                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(numeroMesFinalTexto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel6)
-                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton1))
+                        .addComponent(valorTexto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel3))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
@@ -186,8 +204,8 @@ public class CadastroPrevisaoCustosFixos extends javax.swing.JInternalFrame {
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(contaBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(centroBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(44, 44, 44))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(12, 12, 12)
@@ -200,40 +218,46 @@ public class CadastroPrevisaoCustosFixos extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(centroBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(contaBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "MÊS", "ANO", "CONTA"
+                "Centro de Custo", "Conta de Gastos", "Valor", "Mes", "Ano"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                true, true, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane3.setViewportView(jTable2);
+        tabela.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(tabela);
 
         jScrollPane1.setViewportView(jScrollPane3);
 
         incluirBotao.setText("Incluir");
+        incluirBotao.addActionListener(this::incluirBotaoActionPerformed);
 
         atualizarBotao.setText("Atualizar");
         atualizarBotao.addActionListener(this::atualizarBotaoActionPerformed);
@@ -280,32 +304,195 @@ public class CadastroPrevisaoCustosFixos extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton25ActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void anoTextoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anoTextoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_anoTextoActionPerformed
 
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField3ActionPerformed
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+    private void numeroMesFinalTextoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_numeroMesFinalTextoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    }//GEN-LAST:event_numeroMesFinalTextoActionPerformed
 
     private void atualizarBotaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atualizarBotaoActionPerformed
-        // TODO add your handling code here:
+        int linha = tabela.getSelectedRow();
+
+        GastosGerais conta = contas.get(contaBox.getSelectedIndex());
+        CentroCusto centro = centros.get(centroBox.getSelectedIndex());
+
+        int ano = Integer.parseInt(anoTexto.getText());
+        int mes = Integer.parseInt(numeroMesTexto.getText());
+
+        double valor = Double.parseDouble(valorTexto.getText());
+        double custoHora = valor / centro.getHorasEfetivas();
+
+        PrevisaoCustosFixos p = previsoes.get(linha);
+        p.setCompetencia(LocalDate.of(ano, mes, 1));
+        p.setIdGastoGeral(conta.getId());
+        p.setIdCentroCusto(centro.getId());
+        p.setValor(valor);
+        p.setCustoHora(custoHora);
+        p.setCustoMinuto(custoHora / 60);
+
+        try {
+            dao.alterar(p);
+            JOptionPane.showMessageDialog(this, "Previsão atualizada com sucesso!");
+            carregarTabela();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Erro ao atualizar: " + e.getMessage());
+        }
     }//GEN-LAST:event_atualizarBotaoActionPerformed
 
     private void excluirBotaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirBotaoActionPerformed
-        // TODO add your handling code here:
+        int linha = tabela.getSelectedRow();
+
+        PrevisaoCustosFixos p = previsoes.get(linha);
+        int id = p.getId();
+
+        try {
+            dao.excluir(id);
+            JOptionPane.showMessageDialog(this, "Previsão excluída com sucesso!");
+            limparCampos();
+            carregarTabela();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Erro ao excluir: " + e.getMessage());
+        }
     }//GEN-LAST:event_excluirBotaoActionPerformed
+
+    private void incluirBotaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_incluirBotaoActionPerformed
+        GastosGerais conta = contas.get(contaBox.getSelectedIndex());
+        CentroCusto centro = centros.get(centroBox.getSelectedIndex());
+
+        int ano = Integer.parseInt(anoTexto.getText());
+        int mesInicial = Integer.parseInt(numeroMesTexto.getText());
+        int mesFinal = Integer.parseInt(numeroMesFinalTexto.getText());
+        double valor = Double.parseDouble(valorTexto.getText());
+
+        try {
+            // custo_hora = valor / horas_efetivas   e   custo_minuto = custo_hora / 60
+            double custoHora = valor / centro.getHorasEfetivas();
+            double custoMinuto = custoHora / 60;
+
+            // uma linha por mês do intervalo informado
+            for (int mes = mesInicial; mes <= mesFinal; mes++) {
+                PrevisaoCustosFixos p = new PrevisaoCustosFixos();
+                p.setCompetencia(LocalDate.of(ano, mes, 1));
+                p.setSequencia(1);
+                p.setIdGastoGeral(conta.getId());
+                p.setIdCentroCusto(centro.getId());
+                p.setValor(valor);
+                p.setCustoHora(custoHora);
+                p.setCustoMinuto(custoMinuto);
+
+                dao.inserir(p);
+            }
+
+            JOptionPane.showMessageDialog(this, "Previsão cadastrada com sucesso!");
+            limparCampos();
+            carregarTabela();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Erro ao cadastrar: " + e.getMessage());
+        }
+    }//GEN-LAST:event_incluirBotaoActionPerformed
+
+    private void tabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMouseClicked
+        int linha = tabela.getSelectedRow();
+
+        PrevisaoCustosFixos p = previsoes.get(linha);
+        anoTexto.setText(String.valueOf(p.getCompetencia().getYear()));
+        numeroMesTexto.setText(String.valueOf(p.getCompetencia().getMonthValue()));
+        numeroMesFinalTexto.setText(String.valueOf(p.getCompetencia().getMonthValue()));
+        valorTexto.setText(String.valueOf(p.getValor()));
+
+        for (int i = 0; i < contas.size(); i++) {
+            if (contas.get(i).getId() == p.getIdGastoGeral()) {
+                contaBox.setSelectedIndex(i);
+            }
+        }
+
+        for (int i = 0; i < centros.size(); i++) {
+            if (centros.get(i).getId() == p.getIdCentroCusto()) {
+                centroBox.setSelectedIndex(i);
+            }
+        }
+    }//GEN-LAST:event_tabelaMouseClicked
+
+    private void carregarCombos() {
+        try {
+            contas = gastoDao.listarTodos();
+            centros = centroDao.listarTodos();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Erro ao carregar os combos: " + e.getMessage());
+            return;
+        }
+
+        contaBox.removeAllItems();
+        for (GastosGerais c : contas) {
+            contaBox.addItem(c.getNomeConta());
+        }
+
+        centroBox.removeAllItems();
+        for (CentroCusto c : centros) {
+            centroBox.addItem(c.getNome());
+        }
+    }
+
+    public void carregarTabela() {
+        try {
+            previsoes = dao.listarTodos();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Erro ao carregar a tabela: " + e.getMessage());
+            return;
+        }
+
+        DefaultTableModel model = (DefaultTableModel) tabela.getModel();
+        model.setRowCount(0);
+        for (PrevisaoCustosFixos p : previsoes) {
+            CentroCusto centro = null;
+            for (CentroCusto c : centros) {
+                if (c.getId() == p.getIdCentroCusto()) {
+                    centro = c;
+                }
+            }
+
+            GastosGerais conta = null;
+            for (GastosGerais c : contas) {
+                if (c.getId() == p.getIdGastoGeral()) {
+                    conta = c;
+                }
+            }
+
+            model.addRow(new Object[]{
+                centro.getNome(),
+                conta.getNomeConta(),
+                p.getValor(),
+                p.getCompetencia().getMonthValue(),
+                p.getCompetencia().getYear(),
+            });
+        }
+    }
+
+    private void limparCampos() {
+        anoTexto.setText("");
+        numeroMesTexto.setText("");
+        numeroMesFinalTexto.setText("");
+        valorTexto.setText("");
+        contaBox.setSelectedIndex(0);
+        centroBox.setSelectedIndex(0);
+
+        tabela.clearSelection();
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField anoTexto;
     private javax.swing.JButton atualizarBotao;
+    private javax.swing.JComboBox<String> centroBox;
+    private javax.swing.JComboBox<String> contaBox;
     private javax.swing.JButton excluirBotao;
     private javax.swing.JButton incluirBotao;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton21;
     private javax.swing.JButton jButton22;
     private javax.swing.JButton jButton23;
@@ -316,8 +503,6 @@ public class CadastroPrevisaoCustosFixos extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton28;
     private javax.swing.JButton jButton29;
     private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -330,11 +515,10 @@ public class CadastroPrevisaoCustosFixos extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField numeroMesFinalTexto;
+    private javax.swing.JTextField numeroMesTexto;
+    private javax.swing.JTable tabela;
+    private javax.swing.JTextField valorTexto;
     // End of variables declaration//GEN-END:variables
 }
