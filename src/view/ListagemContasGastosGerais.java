@@ -1,9 +1,40 @@
 package view;
 
+import dao.DataSource;
+import dao.GastosGeraisDAO;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.GastosGerais;
+
 public class ListagemContasGastosGerais extends javax.swing.JInternalFrame {
+
+    private GastosGeraisDAO dao = new GastosGeraisDAO(new DataSource());
 
     public ListagemContasGastosGerais() {
         initComponents();
+        carregarTabela();
+    }
+
+    private void carregarTabela() {
+        List<GastosGerais> contas = new ArrayList<>();
+
+        try {
+            contas = dao.listarTodos();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Erro ao carregar a tabela: " + e.getMessage());
+            return;
+        }
+
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        for (GastosGerais c : contas) {
+            model.addRow(new Object[]{
+                c.getNomeConta()
+            });
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -22,13 +53,13 @@ public class ListagemContasGastosGerais extends javax.swing.JInternalFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null},
+                {null},
+                {null},
+                {null}
             },
             new String [] {
-                "Código", "Conta"
+                "Conta"
             }
         ));
         jScrollPane1.setViewportView(jTable1);

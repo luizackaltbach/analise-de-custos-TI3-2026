@@ -17,7 +17,6 @@ public class menu extends javax.swing.JFrame {
         jDesktopPane1 = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
@@ -31,13 +30,12 @@ public class menu extends javax.swing.JFrame {
         jMenuItem12 = new javax.swing.JMenuItem();
         jMenuItem13 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
-        jMenuItem14 = new javax.swing.JMenuItem();
         jMenuItem15 = new javax.swing.JMenuItem();
         jMenuItem16 = new javax.swing.JMenuItem();
-        jMenuItem17 = new javax.swing.JMenuItem();
         jMenuItem18 = new javax.swing.JMenuItem();
         jMenuItem19 = new javax.swing.JMenuItem();
         jMenuItem20 = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem21 = new javax.swing.JMenuItem();
 
@@ -58,9 +56,6 @@ public class menu extends javax.swing.JFrame {
         );
 
         jMenu1.setText("Arquivo ");
-
-        jMenuItem1.setText("Imagem");
-        jMenu1.add(jMenuItem1);
 
         jMenuItem2.setText("Sair");
         jMenuItem2.addActionListener(this::jMenuItem2ActionPerformed);
@@ -114,9 +109,6 @@ public class menu extends javax.swing.JFrame {
 
         jMenu3.setText("Relatórios");
 
-        jMenuItem14.setText("Composição de produtos acabados");
-        jMenu3.add(jMenuItem14);
-
         jMenuItem15.setText("Listagem de matéria prima");
         jMenuItem15.addActionListener(this::jMenuItem15ActionPerformed);
         jMenu3.add(jMenuItem15);
@@ -124,9 +116,6 @@ public class menu extends javax.swing.JFrame {
         jMenuItem16.setText("Listagem de produtos acabados");
         jMenuItem16.addActionListener(this::jMenuItem16ActionPerformed);
         jMenu3.add(jMenuItem16);
-
-        jMenuItem17.setText("Listagem de preços");
-        jMenu3.add(jMenuItem17);
 
         jMenuItem18.setText("Contas de gastos gerais");
         jMenuItem18.addActionListener(this::jMenuItem18ActionPerformed);
@@ -140,11 +129,16 @@ public class menu extends javax.swing.JFrame {
         jMenuItem20.addActionListener(this::jMenuItem20ActionPerformed);
         jMenu3.add(jMenuItem20);
 
+        jMenuItem1.setText("Listagem de preços");
+        jMenuItem1.addActionListener(this::jMenuItem1ActionPerformed);
+        jMenu3.add(jMenuItem1);
+
         jMenuBar1.add(jMenu3);
 
-        jMenu4.setText("Ajuda");
+        jMenu4.setText("Sobre");
 
-        jMenuItem21.setText("Conteúdo");
+        jMenuItem21.setText("Funcionamento");
+        jMenuItem21.addActionListener(this::jMenuItem21ActionPerformed);
         jMenu4.add(jMenuItem21);
 
         jMenuBar1.add(jMenu4);
@@ -211,7 +205,7 @@ public class menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
     private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
-        abrir(new ListagemMateriaPrima());
+        abrir(new ListagemMateria());
     }//GEN-LAST:event_jMenuItem15ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
@@ -233,6 +227,14 @@ public class menu extends javax.swing.JFrame {
     private void jMenuItem20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem20ActionPerformed
         abrir(new ListagemPrevisaoReposicaoEstoque());
     }//GEN-LAST:event_jMenuItem20ActionPerformed
+
+    private void jMenuItem21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem21ActionPerformed
+        abrir(new Ajuda());
+    }//GEN-LAST:event_jMenuItem21ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        abrir(new ListagemProdutos());
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     public static void main(String args[]) {
         try {
@@ -262,10 +264,8 @@ public class menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
-    private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem16;
-    private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem18;
     private javax.swing.JMenuItem jMenuItem19;
     private javax.swing.JMenuItem jMenuItem2;

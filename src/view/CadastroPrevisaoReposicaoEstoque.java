@@ -46,13 +46,20 @@ public class CadastroPrevisaoReposicaoEstoque extends JInternalFrame {
     private void incluirBotaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_incluirBotaoActionPerformed
         MateriaPrima m = materias.get(matprimaBox.getSelectedIndex());
 
+        double quantidade = Double.parseDouble(quantidadeTexto.getText());
+        double custo = Double.parseDouble(custoReposicao.getText());
+        double outrosGastos = Double.parseDouble(outrosGastosTexto.getText());
+
         PrevisaoReposicaoEstoque p = new PrevisaoReposicaoEstoque();
         p.setCompetencia(LocalDate.parse(competenciaData.getText(), FORMATO_DATA));
         p.setSequencia(Integer.parseInt(sequenciaTexto.getText()));
         p.setIdMateriaPrima(m.getId());
-        p.setQuantidade(Double.parseDouble(quantidadeTexto.getText()));
-        p.setCustoReposicao(Double.parseDouble(custoReposicao.getText()));
-        p.setOutrosGastos(Double.parseDouble(outrosGastosTexto.getText()));
+        p.setQuantidade(quantidade);
+        p.setCustoReposicao(custo);
+        p.setOutrosGastos(outrosGastos);
+
+        // gastos_totais = (quantidade × custo_reposicao) + outros_gastos
+        p.setGastosTotais((quantidade * custo) + outrosGastos);
 
         try {
             dao.inserir(p);
@@ -68,13 +75,20 @@ public class CadastroPrevisaoReposicaoEstoque extends JInternalFrame {
         int linha = reposicaoTable.getSelectedRow();
         MateriaPrima m = materias.get(matprimaBox.getSelectedIndex());
 
+        double quantidade = Double.parseDouble(quantidadeTexto.getText());
+        double custo = Double.parseDouble(custoReposicao.getText());
+        double outrosGastos = Double.parseDouble(outrosGastosTexto.getText());
+
         PrevisaoReposicaoEstoque p = previsoes.get(linha);
         p.setCompetencia(LocalDate.parse(competenciaData.getText(), FORMATO_DATA));
         p.setSequencia(Integer.parseInt(sequenciaTexto.getText()));
         p.setIdMateriaPrima(m.getId());
-        p.setQuantidade(Double.parseDouble(quantidadeTexto.getText()));
-        p.setCustoReposicao(Double.parseDouble(custoReposicao.getText()));
-        p.setOutrosGastos(Double.parseDouble(outrosGastosTexto.getText()));
+        p.setQuantidade(quantidade);
+        p.setCustoReposicao(custo);
+        p.setOutrosGastos(outrosGastos);
+
+        // gastos_totais = (quantidade × custo_reposicao) + outros_gastos
+        p.setGastosTotais((quantidade * custo) + outrosGastos);
 
         try {
             dao.alterar(p);
@@ -143,15 +157,12 @@ public class CadastroPrevisaoReposicaoEstoque extends JInternalFrame {
         DefaultTableModel model = (DefaultTableModel) reposicaoTable.getModel();
         model.setRowCount(0);
         for (PrevisaoReposicaoEstoque p : previsoes) {
-            MateriaPrima m = null;
+            MateriaPrima m = new MateriaPrima();
             for (MateriaPrima materia : materias) {
                 if (materia.getId() == p.getIdMateriaPrima()) {
                     m = materia;
                 }
             }
-
-            // gastos_totais = (quantidade × custo_reposicao) + outros_gastos
-            double gastosTotais = (p.getQuantidade() * p.getCustoReposicao()) + p.getOutrosGastos();
 
             model.addRow(new Object[]{
                 p.getCompetencia().format(FORMATO_DATA),
@@ -161,7 +172,7 @@ public class CadastroPrevisaoReposicaoEstoque extends JInternalFrame {
                 p.getQuantidade(),
                 p.getCustoReposicao(),
                 p.getOutrosGastos(),
-                gastosTotais
+                p.getGastosTotais()
             });
         }
     }

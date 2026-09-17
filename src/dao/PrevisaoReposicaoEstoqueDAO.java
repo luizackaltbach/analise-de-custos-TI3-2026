@@ -17,7 +17,7 @@ public class PrevisaoReposicaoEstoqueDAO {
     }
 
     public void inserir(PrevisaoReposicaoEstoque obj) throws SQLException {
-        String sql = "INSERT INTO previsao_reposicao_estoque (competencia, sequencia, id_materia_prima, quantidade, custo_reposicao, outros_gastos) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO previsao_reposicao_estoque (competencia, sequencia, id_materia_prima, quantidade, custo_reposicao, outros_gastos, gastos_totais) VALUES (?, ?, ?, ?, ?, ?, ?)";
         Connection con = dataSource.getConnection();
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setObject(1, obj.getCompetencia());
@@ -26,12 +26,13 @@ public class PrevisaoReposicaoEstoqueDAO {
             ps.setDouble(4, obj.getQuantidade());
             ps.setDouble(5, obj.getCustoReposicao());
             ps.setDouble(6, obj.getOutrosGastos());
+            ps.setDouble(7, obj.getGastosTotais());
             ps.executeUpdate();
         }
     }
 
     public void alterar(PrevisaoReposicaoEstoque obj) throws SQLException {
-        String sql = "UPDATE previsao_reposicao_estoque SET competencia = ?, sequencia = ?, id_materia_prima = ?, quantidade = ?, custo_reposicao = ?, outros_gastos = ? WHERE id = ?";
+        String sql = "UPDATE previsao_reposicao_estoque SET competencia = ?, sequencia = ?, id_materia_prima = ?, quantidade = ?, custo_reposicao = ?, outros_gastos = ?, gastos_totais = ? WHERE id = ?";
         Connection con = dataSource.getConnection();
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setObject(1, obj.getCompetencia());
@@ -40,7 +41,8 @@ public class PrevisaoReposicaoEstoqueDAO {
             ps.setDouble(4, obj.getQuantidade());
             ps.setDouble(5, obj.getCustoReposicao());
             ps.setDouble(6, obj.getOutrosGastos());
-            ps.setInt(7, obj.getId());
+            ps.setDouble(7, obj.getGastosTotais());
+            ps.setInt(8, obj.getId());
             ps.executeUpdate();
         }
     }

@@ -108,21 +108,6 @@ CREATE TABLE composicao_centro_custo (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 
-CREATE TABLE cadastro_estoque (
-  id                  INT           AUTO_INCREMENT,
-  codigo              VARCHAR(30),
-  produto             VARCHAR(50),
-  unidade             VARCHAR(20),
-  quantidade_anterior DECIMAL(12,3) DEFAULT 0,
-  quantidade          DECIMAL(12,3) DEFAULT 0,
-  custo_anterior      DECIMAL(13,4) DEFAULT 0,
-  custo               DECIMAL(13,4) DEFAULT 0,
-  custo_medio         DECIMAL(13,4) DEFAULT 0,
-  venda               DECIMAL(13,2) DEFAULT 0,
-  total               DECIMAL(13,2) DEFAULT 0,
-  PRIMARY KEY (id)
-) ENGINE=InnoDB;
-
 CREATE TABLE resultado_administrativo (
   id               INT      AUTO_INCREMENT,
   data_calculo     DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -158,12 +143,3 @@ CREATE TABLE resultado_administrativo (
   KEY idx_resadm_produto_data (id_produto_venda, data_calculo)
 ) ENGINE=InnoDB;
 
-CREATE TABLE resultado_grafico (
-  id              INT           AUTO_INCREMENT,
-  id_resultado    INT REFERENCES resultado_administrativo(id),
-  quantidade_venda DECIMAL(13,2) DEFAULT 0,
-  receita_total   DECIMAL(13,2) DEFAULT 0,
-  custo_total     DECIMAL(13,2) DEFAULT 0,
-  lucro_prejuizo  DECIMAL(13,2),
-  PRIMARY KEY (id)
-) ENGINE=InnoDB;

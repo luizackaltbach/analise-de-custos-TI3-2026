@@ -50,7 +50,6 @@ public class CadastroComposicaoProdutos extends javax.swing.JInternalFrame {
         codigoTexto = new javax.swing.JTextField();
         nomeTexto = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        unidadeTexto = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -71,6 +70,7 @@ public class CadastroComposicaoProdutos extends javax.swing.JInternalFrame {
         salvarBotao = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         quantidadeLote = new javax.swing.JTextField();
+        unidadeCombo = new javax.swing.JComboBox<>();
 
         jCheckBoxMenuItem1.setSelected(true);
         jCheckBoxMenuItem1.setText("jCheckBoxMenuItem1");
@@ -90,7 +90,7 @@ public class CadastroComposicaoProdutos extends javax.swing.JInternalFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
-        jLabel5.setText("Inserir Produto Primário");
+        jLabel5.setText("Inserir Matéria Prima");
 
         materiaPrimaCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -130,10 +130,7 @@ public class CadastroComposicaoProdutos extends javax.swing.JInternalFrame {
 
         tabelaProdutoPrimario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "Código", "Produto", "Unidade", "Quant", "Custo Rep."
@@ -160,10 +157,7 @@ public class CadastroComposicaoProdutos extends javax.swing.JInternalFrame {
 
         tabelaCentroCusto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
                 "Centro de Custo", "Tempo (min)", "Custo/Min"
@@ -209,7 +203,7 @@ public class CadastroComposicaoProdutos extends javax.swing.JInternalFrame {
                 .addComponent(tempoMinutosCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(adicionarCentroCustoBotao)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 16, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -228,6 +222,8 @@ public class CadastroComposicaoProdutos extends javax.swing.JInternalFrame {
         salvarBotao.addActionListener(this::salvarBotaoActionPerformed);
 
         jLabel4.setText("Quantidade do Lote");
+
+        unidadeCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "  Kg", "  g", "  L", "  ml", "  un", "  m", "  m²", "  cx", "  pc" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -248,8 +244,8 @@ public class CadastroComposicaoProdutos extends javax.swing.JInternalFrame {
                         .addGap(97, 97, 97)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(unidadeTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(unidadeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(quantidadeLote, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
@@ -271,7 +267,9 @@ public class CadastroComposicaoProdutos extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(nomeTexto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(nomeTexto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(unidadeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -281,9 +279,7 @@ public class CadastroComposicaoProdutos extends javax.swing.JInternalFrame {
                             .addComponent(jLabel3)
                             .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(unidadeTexto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(quantidadeLote, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(quantidadeLote, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
@@ -320,7 +316,7 @@ public class CadastroComposicaoProdutos extends javax.swing.JInternalFrame {
 
         DefaultTableModel model = (DefaultTableModel) tabelaProdutoPrimario.getModel();
         model.addRow(new Object[]{
-            m.getId(), m.getNome(), m.getUnidade(), quantidade, m.getCustoReposicao()
+            m.getCodigo(), m.getNome(), m.getUnidade(), quantidade, m.getCustoReposicao()
         });
 
         quantidadeMateriaPrimaTexto.setText("");
@@ -339,12 +335,10 @@ public class CadastroComposicaoProdutos extends javax.swing.JInternalFrame {
         }
 
         // competência mais recente lançada para o centro
-        java.time.LocalDate competencia = null;
+        java.time.LocalDate competencia = java.time.LocalDate.MIN;
         for (PrevisaoCustosFixos p : previsoes) {
-            if (p.getIdCentroCusto() == centro.getId()) {
-                if (competencia == null || p.getCompetencia().isAfter(competencia)) {
-                    competencia = p.getCompetencia();
-                }
+            if (p.getIdCentroCusto() == centro.getId() && p.getCompetencia().isAfter(competencia)) {
+                competencia = p.getCompetencia();
             }
         }
 
@@ -396,7 +390,7 @@ public class CadastroComposicaoProdutos extends javax.swing.JInternalFrame {
         ProdutosParaVenda produto = new ProdutosParaVenda();
         produto.setCodigo(codigo);
         produto.setNome(nomeTexto.getText());
-        produto.setUnidade(unidadeTexto.getText());
+        produto.setUnidade(String.valueOf(unidadeCombo.getSelectedItem()));
         produto.setQuantidade(quantidade);
         produto.setCustoGeral(custoGeral);
 
@@ -454,7 +448,7 @@ public class CadastroComposicaoProdutos extends javax.swing.JInternalFrame {
     private void limparCampos() {
         codigoTexto.setText("");
         nomeTexto.setText("");
-        unidadeTexto.setText("");
+        unidadeCombo.setSelectedIndex(0);
         quantidadeLote.setText("");
         quantidadeMateriaPrimaTexto.setText("");
         tempoMinutosCombo.setText("");
@@ -498,6 +492,6 @@ public class CadastroComposicaoProdutos extends javax.swing.JInternalFrame {
     private javax.swing.JTable tabelaCentroCusto;
     private javax.swing.JTable tabelaProdutoPrimario;
     private javax.swing.JTextField tempoMinutosCombo;
-    private javax.swing.JTextField unidadeTexto;
+    private javax.swing.JComboBox<String> unidadeCombo;
     // End of variables declaration//GEN-END:variables
 }

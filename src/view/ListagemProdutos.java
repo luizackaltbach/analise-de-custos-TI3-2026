@@ -1,9 +1,42 @@
 package view;
 
+import dao.DataSource;
+import dao.ResultadoAdministrativoDAO;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.ResultadoAdministrativo;
+
 public class ListagemProdutos extends javax.swing.JInternalFrame {
+
+    private ResultadoAdministrativoDAO dao = new ResultadoAdministrativoDAO(new DataSource());
 
     public ListagemProdutos() {
         initComponents();
+        carregarTabela();
+    }
+
+    private void carregarTabela() {
+        List<ResultadoAdministrativo> resultados = new ArrayList<>();
+
+        try {
+            resultados = dao.listarTodos();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Erro ao carregar a tabela: " + e.getMessage());
+            return;
+        }
+
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        for (ResultadoAdministrativo r : resultados) {
+            model.addRow(new Object[]{
+                r.getCodigoProduto(), r.getNomeProduto(), r.getUnidade(),
+                r.getTotal(), r.getPrecoVendaDesconto(), r.getPrecoFinalUnitario(),
+                r.getTaxaRetornoCapital()
+            });
+        }
     }
 
     @SuppressWarnings("unchecked")

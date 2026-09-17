@@ -1,9 +1,61 @@
 package view;
 
+import dao.DataSource;
+import dao.PrevisaoCustosFixosDAO;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.PrevisaoCustosFixos;
+
 public class ListagemPrevisaoCustosFixos extends javax.swing.JInternalFrame {
+
+    private PrevisaoCustosFixosDAO dao = new PrevisaoCustosFixosDAO(new DataSource());
 
     public ListagemPrevisaoCustosFixos() {
         initComponents();
+        carregarTabela();
+    }
+
+    private void carregarTabela() {
+        List<PrevisaoCustosFixos> previsoes = new ArrayList<>();
+
+        try {
+            previsoes = dao.listarTodos();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Erro ao carregar a tabela: " + e.getMessage());
+            return;
+        }
+
+        // uma linha por competência, somando o valor de todos os lançamentos do mês
+        List<PrevisaoCustosFixos> competencias = new ArrayList<>();
+        for (PrevisaoCustosFixos p : previsoes) {
+            boolean existe = false;
+            for (PrevisaoCustosFixos c : competencias) {
+                if (c.getCompetencia().equals(p.getCompetencia())) {
+                    existe = true;
+                }
+            }
+            if (!existe) {
+                competencias.add(p);
+            }
+        }
+
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        for (PrevisaoCustosFixos c : competencias) {
+            double total = 0;
+            for (PrevisaoCustosFixos p : previsoes) {
+                if (p.getCompetencia().equals(c.getCompetencia())) {
+                    total = total + p.getValor();
+                }
+            }
+
+            model.addRow(new Object[]{
+                c.getCompetencia().getMonthValue(), c.getCompetencia().getYear(), total
+            });
+        }
     }
 
     @SuppressWarnings("unchecked")

@@ -1,62 +1,41 @@
 package view;
 
+import dao.DataSource;
+import dao.MateriaPrimaDAO;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.MateriaPrima;
+
 public class ListagemMateria extends javax.swing.JInternalFrame {
 
+    private MateriaPrimaDAO dao = new MateriaPrimaDAO(new DataSource());
+
     public ListagemMateria() {
-        this("", "");
-    }
-
-    public ListagemMateria(String codigoDe, String codigoAte) {
         initComponents();
-        carregarTabela(codigoDe, codigoAte);
+        carregarTabela();
     }
 
-    private void carregarTabela(String codigoDe, String codigoAte) {
-        javax.swing.table.DefaultTableModel modelo = new javax.swing.table.DefaultTableModel(
-                new String[]{"Registro", "Código", "Produto", "Unidade", "Custo", "Reposição"}, 0) {
-            @Override
-            public boolean isCellEditable(int linha, int coluna) {
-                return false;
-            }
-        };
-        dao.DataSource dataSource = new dao.DataSource();
+    private void carregarTabela() {
+        List<MateriaPrima> materias = new ArrayList<>();
+
         try {
-            for (model.MateriaPrima materia : new dao.MateriaPrimaDAO(dataSource).listarTodos()) {
-                if (dentroDoIntervalo(materia.getCodigo(), codigoDe, codigoAte)) {
-                    modelo.addRow(new Object[]{
-                        materia.getId(),
-                        materia.getCodigo(),
-                        materia.getNome(),
-                        materia.getUnidade(),
-                        materia.getCustoReposicao(),
-                        materia.getQuantidadeEstoque()
-                    });
-                }
-            }
-        } catch (java.sql.SQLException ex) {
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    "Erro ao carregar a listagem: " + ex.getMessage(),
-                    "Listagem de matéria prima", javax.swing.JOptionPane.ERROR_MESSAGE);
-        } finally {
-            dataSource.CloseDataSource();
+            materias = dao.listarTodos();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Erro ao carregar a tabela: " + e.getMessage());
+            return;
         }
-        jTable1.setModel(modelo);
-        if (modelo.getRowCount() == 0) {
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    "Nenhuma matéria prima encontrada para o filtro informado.",
-                    "Listagem de matéria prima", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-        }
-    }
 
-    private boolean dentroDoIntervalo(String codigo, String codigoDe, String codigoAte) {
-        if (codigoDe == null || codigoDe.isEmpty() || codigoAte == null || codigoAte.isEmpty()) {
-            return true;
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        for (MateriaPrima m : materias) {
+            model.addRow(new Object[]{
+                m.getCodigo(), m.getNome(), m.getUnidade(),
+                m.getCustoReposicao(), m.getQuantidadeEstoque()
+            });
         }
-        if (codigo == null) {
-            return false;
-        }
-        return codigo.compareToIgnoreCase(codigoDe) >= 0
-                && codigo.compareToIgnoreCase(codigoAte) <= 0;
     }
 
     @SuppressWarnings("unchecked")
@@ -75,13 +54,13 @@ public class ListagemMateria extends javax.swing.JInternalFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Registro", "Código", "Produto", "Unidade", "Custo", "Reposição"
+                "Código", "Produto", "Unidade", "Custo", "Reposição"
             }
         ));
         jScrollPane1.setViewportView(jTable1);

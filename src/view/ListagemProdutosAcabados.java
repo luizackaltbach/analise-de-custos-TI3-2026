@@ -1,9 +1,41 @@
 package view;
 
+import dao.DataSource;
+import dao.ProdutosParaVendaDAO;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.ProdutosParaVenda;
+
 public class ListagemProdutosAcabados extends javax.swing.JInternalFrame {
+
+    private ProdutosParaVendaDAO dao = new ProdutosParaVendaDAO(new DataSource());
 
     public ListagemProdutosAcabados() {
         initComponents();
+        carregarTabela();
+    }
+
+    private void carregarTabela() {
+        List<ProdutosParaVenda> produtos = new ArrayList<>();
+
+        try {
+            produtos = dao.listarTodos();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Erro ao carregar a tabela: " + e.getMessage());
+            return;
+        }
+
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        for (ProdutosParaVenda p : produtos) {
+            model.addRow(new Object[]{
+                p.getCodigo(), p.getNome(), p.getUnidade(), p.getQuantidade(),
+                p.getCustoUnitario(), p.getCustoGeral()
+            });
+        }
     }
 
     @SuppressWarnings("unchecked")

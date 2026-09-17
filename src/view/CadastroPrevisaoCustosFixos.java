@@ -432,14 +432,14 @@ public class CadastroPrevisaoCustosFixos extends javax.swing.JInternalFrame {
         DefaultTableModel model = (DefaultTableModel) tabela.getModel();
         model.setRowCount(0);
         for (PrevisaoCustosFixos p : previsoes) {
-            CentroCusto centro = null;
+            CentroCusto centro = new CentroCusto();
             for (CentroCusto c : centros) {
                 if (c.getId() == p.getIdCentroCusto()) {
                     centro = c;
                 }
             }
 
-            GastosGerais conta = null;
+            GastosGerais conta = new GastosGerais();
             for (GastosGerais c : contas) {
                 if (c.getId() == p.getIdGastoGeral()) {
                     conta = c;
