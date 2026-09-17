@@ -8,9 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import model.CadastroEstoque;
 
-/**
- * Acesso a dados da tabela cadastro_estoque.
- */
 public class CadastroEstoqueDAO {
 
     private final DataSource dataSource;

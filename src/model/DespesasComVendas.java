@@ -1,9 +1,5 @@
 package model;
 
-
-/**
- * Entidade da tabela despesas_com_vendas.
- */
 public class DespesasComVendas {
 
     private int id;

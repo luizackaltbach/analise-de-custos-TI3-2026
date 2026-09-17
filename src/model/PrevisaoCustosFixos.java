@@ -2,9 +2,6 @@ package model;
 
 import java.time.LocalDate;
 
-/**
- * Entidade da tabela previsao_custos_fixos.
- */
 public class PrevisaoCustosFixos {
 
     private int id;

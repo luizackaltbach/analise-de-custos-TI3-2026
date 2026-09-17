@@ -1,8 +1,5 @@
 package model;
 
-/**
- * Entidade da tabela centro_custo.
- */
 public class CentroCusto {
 
     private int id;

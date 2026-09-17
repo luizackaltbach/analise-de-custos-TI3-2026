@@ -8,9 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import model.ResultadoGrafico;
 
-/**
- * Acesso a dados da tabela resultado_grafico.
- */
 public class ResultadoGraficoDAO {
 
     private final DataSource dataSource;

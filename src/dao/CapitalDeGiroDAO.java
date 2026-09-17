@@ -8,9 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import model.CapitalDeGiro;
 
-/**
- * Acesso a dados da tabela capital_de_giro.
- */
 public class CapitalDeGiroDAO {
 
     private final DataSource dataSource;

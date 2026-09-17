@@ -2,9 +2,6 @@ package model;
 
 import java.time.LocalDate;
 
-/**
- * Entidade da tabela previsao_reposicao_estoque.
- */
 public class PrevisaoReposicaoEstoque {
 
     private int id;
@@ -14,7 +11,7 @@ public class PrevisaoReposicaoEstoque {
     private double quantidade;
     private double custoReposicao;
     private double outrosGastos;
-    private double gastosTotais;  // calculada pelo banco
+    private double gastosTotais;
 
     public PrevisaoReposicaoEstoque() {
     }

@@ -1,8 +1,5 @@
 package model;
 
-/**
- * Entidade da tabela gastos_gerais.
- */
 public class GastosGerais {
 
     private int id;

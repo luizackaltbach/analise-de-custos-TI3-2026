@@ -1,9 +1,5 @@
 package model;
 
-
-/**
- * Entidade da tabela materia_prima.
- */
 public class MateriaPrima {
 
     private int id;

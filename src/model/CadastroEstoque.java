@@ -1,9 +1,5 @@
 package model;
 
-
-/**
- * Entidade da tabela cadastro_estoque.
- */
 public class CadastroEstoque {
 
     private int id;

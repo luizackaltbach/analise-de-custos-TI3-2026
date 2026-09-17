@@ -1,9 +1,5 @@
 package model;
 
-
-/**
- * Entidade da tabela resultado_grafico.
- */
 public class ResultadoGrafico {
 
     private int id;
@@ -11,7 +7,7 @@ public class ResultadoGrafico {
     private double quantidadeVenda;
     private double receitaTotal;
     private double custoTotal;
-    private double lucroPrejuizo;  // calculada pelo banco
+    private double lucroPrejuizo;
 
     public ResultadoGrafico() {
     }

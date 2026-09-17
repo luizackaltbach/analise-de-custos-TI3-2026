@@ -2,9 +2,6 @@ package model;
 
 import java.time.LocalDateTime;
 
-/**
- * Entidade da tabela resultado_administrativo.
- */
 public class ResultadoAdministrativo {
 
     private int id;

@@ -1,9 +1,5 @@
 package model;
 
-
-/**
- * Entidade da tabela produtos_para_venda.
- */
 public class ProdutosParaVenda {
 
     private int id;

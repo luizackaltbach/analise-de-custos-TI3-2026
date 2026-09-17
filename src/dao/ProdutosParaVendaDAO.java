@@ -8,9 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import model.ProdutosParaVenda;
 
-/**
- * Acesso a dados da tabela produtos_para_venda.
- */
 public class ProdutosParaVendaDAO {
 
     private final DataSource dataSource;

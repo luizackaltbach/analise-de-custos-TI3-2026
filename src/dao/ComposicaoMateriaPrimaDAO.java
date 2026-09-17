@@ -8,9 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import model.ComposicaoMateriaPrima;
 
-/**
- * Acesso a dados da tabela composicao_materia_prima.
- */
 public class ComposicaoMateriaPrimaDAO {
 
     private final DataSource dataSource;

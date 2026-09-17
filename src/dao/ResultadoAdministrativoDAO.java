@@ -8,9 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import model.ResultadoAdministrativo;
 
-/**
- * Acesso a dados da tabela resultado_administrativo.
- */
 public class ResultadoAdministrativoDAO {
 
     private final DataSource dataSource;

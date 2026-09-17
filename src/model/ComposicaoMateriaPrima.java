@@ -1,9 +1,5 @@
 package model;
 
-
-/**
- * Entidade da tabela composicao_materia_prima.
- */
 public class ComposicaoMateriaPrima {
 
     private int id;
@@ -11,7 +7,7 @@ public class ComposicaoMateriaPrima {
     private int idMateriaPrima;
     private double quantidade;
     private double custoReposicao;
-    private double total;  // calculada pelo banco
+    private double total;
 
     public ComposicaoMateriaPrima() {
     }

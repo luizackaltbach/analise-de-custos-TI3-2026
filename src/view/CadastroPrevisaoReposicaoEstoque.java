@@ -178,7 +178,6 @@ public class CadastroPrevisaoReposicaoEstoque extends JInternalFrame {
     }
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -383,9 +382,7 @@ public class CadastroPrevisaoReposicaoEstoque extends JInternalFrame {
     }//GEN-LAST:event_jButton17ActionPerformed
 
     private void matprimaBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_matprimaBoxActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_matprimaBoxActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton atualizarBotao;

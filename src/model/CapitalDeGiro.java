@@ -1,9 +1,5 @@
 package model;
 
-
-/**
- * Entidade da tabela capital_de_giro.
- */
 public class CapitalDeGiro {
 
     private int id;

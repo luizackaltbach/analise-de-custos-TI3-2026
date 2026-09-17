@@ -8,9 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import model.PrevisaoCustosFixos;
 
-/**
- * Acesso a dados da tabela previsao_custos_fixos.
- */
 public class PrevisaoCustosFixosDAO {
 
     private final DataSource dataSource;

@@ -8,9 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import model.DespesasComVendas;
 
-/**
- * Acesso a dados da tabela despesas_com_vendas.
- */
 public class DespesasComVendasDAO {
 
     private final DataSource dataSource;

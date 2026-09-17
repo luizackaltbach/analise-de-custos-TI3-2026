@@ -8,9 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import model.InvestimentoFixo;
 
-/**
- * Acesso a dados da tabela investimento_fixo.
- */
 public class InvestimentoFixoDAO {
 
     private final DataSource dataSource;

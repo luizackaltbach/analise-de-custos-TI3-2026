@@ -8,9 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import model.CentroCusto;
 
-/**
- * Acesso a dados da tabela centro_custo.
- */
 public class CentroCustoDAO {
 
     private final DataSource dataSource;

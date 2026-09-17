@@ -64,15 +64,6 @@ CREATE TABLE previsao_reposicao_estoque (
   KEY idx_pre_competencia (competencia)
 ) ENGINE=InnoDB;
 
-CREATE TABLE custo_por_hora (
-  id              INT           AUTO_INCREMENT,
-  id_centro_custo INT REFERENCES centro_custo(id),
-  id_gasto_geral  INT REFERENCES gastos_gerais(id),
-  valor           DECIMAL(13,2) DEFAULT 0,
-  custo_minuto    DECIMAL(13,6) DEFAULT 0,
-  PRIMARY KEY (id)
-) ENGINE=InnoDB;
-
 CREATE TABLE previsao_custos_fixos (
   id              INT           AUTO_INCREMENT,
   competencia     DATE,

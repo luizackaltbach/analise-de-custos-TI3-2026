@@ -8,9 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import model.GastosGerais;
 
-/**
- * Acesso a dados da tabela gastos_gerais.
- */
 public class GastosGeraisDAO {
 
     private final DataSource dataSource;

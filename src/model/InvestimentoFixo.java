@@ -1,9 +1,5 @@
 package model;
 
-
-/**
- * Entidade da tabela investimento_fixo.
- */
 public class InvestimentoFixo {
 
     private int id;

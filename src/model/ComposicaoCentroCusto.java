@@ -1,9 +1,5 @@
 package model;
 
-
-/**
- * Entidade da tabela composicao_centro_custo.
- */
 public class ComposicaoCentroCusto {
 
     private int id;
@@ -11,7 +7,7 @@ public class ComposicaoCentroCusto {
     private int idCentroCusto;
     private double tempoMinutos;
     private double custoMinuto;
-    private double total;  // calculada pelo banco
+    private double total;
 
     public ComposicaoCentroCusto() {
     }
