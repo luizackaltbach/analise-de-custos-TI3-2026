@@ -3,8 +3,6 @@ package view;
 import dao.DataSource;
 import dao.MateriaPrimaDAO;
 import dao.PrevisaoReposicaoEstoqueDAO;
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.*;
@@ -17,391 +15,201 @@ import model.PrevisaoReposicaoEstoque;
 
 public class CadastroPrevisaoReposicaoEstoque extends JInternalFrame {
 
-    private final DataSource ds = new DataSource();
-    private final PrevisaoReposicaoEstoqueDAO dao =
-            new PrevisaoReposicaoEstoqueDAO(ds);
-    private final MateriaPrimaDAO materiaDao =
-            new MateriaPrimaDAO(ds);
+    private DataSource ds = new DataSource();
+    private PrevisaoReposicaoEstoqueDAO dao = new PrevisaoReposicaoEstoqueDAO(ds);
+    private MateriaPrimaDAO materiaDao = new MateriaPrimaDAO(ds);
+
+    private static final DateTimeFormatter FORMATO_DATA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     private List<PrevisaoReposicaoEstoque> previsoes = new ArrayList<>();
     private List<MateriaPrima> materias = new ArrayList<>();
-    private PrevisaoReposicaoEstoque selecionada;
 
     
 
     public CadastroPrevisaoReposicaoEstoque() {
-        super("Previsão de reposição em estoque",
-                true, true, true, true);
+        initComponents();
 
-        criarTela();
+        configurarCampos();
+        carregarMaterias();
+        carregarTabela();
+    }
 
+    private void configurarCampos() {
         try {
-            carregarMaterias();
-            carregarTabela();
-        } catch (SQLException e) {
-            erro(e);
-        }
-
-        setSize(760, 550);
-    }
-
-    private void criarTela() {
-        setLayout(new BorderLayout(5, 5));
-
-        JPanel campos = new JPanel(new GridLayout(4, 4, 5, 5));
-
-        competenciaData = criarData();
-
-        sequenciaSpinner =
-                new JSpinner(new SpinnerNumberModel(0, 0, null, 1));
-
-        quantidadeSpinner = decimal();
-        custorepSpinner = decimal();
-        outrosgastSpinner = decimal();
-        gastostotaisSpinner = decimal();
-        gastostotaisSpinner.setEnabled(false);
-
-        matprimaBox = new JComboBox<>();
-
-        campos.add(new JLabel("Competência"));
-        campos.add(competenciaData);
-
-        campos.add(new JLabel("Sequência"));
-        campos.add(sequenciaSpinner);
-
-        campos.add(new JLabel("Matéria Prima"));
-        campos.add(matprimaBox);
-
-        campos.add(new JLabel("Quantidade"));
-        campos.add(quantidadeSpinner);
-
-        campos.add(new JLabel("Custo reposição"));
-        campos.add(custorepSpinner);
-
-        campos.add(new JLabel("Outros gastos"));
-        campos.add(outrosgastSpinner);
-
-        campos.add(new JLabel("Total"));
-        campos.add(gastostotaisSpinner);
-
-        add(campos, BorderLayout.NORTH);
-
-        reposicaoTable = new JTable(new DefaultTableModel(
-                new Object[]{
-                    "Competência",
-                    "Sequência",
-                    "Código",
-                    "Matéria-prima",
-                    "Quantidade",
-                    "Custo reposição",
-                    "Outros gastos",
-                    "Total"
-                }, 0
-        ));
-
-        add(new JScrollPane(reposicaoTable),
-                BorderLayout.CENTER);
-
-        JButton incluir = new JButton("Incluir");
-        JButton salvar = new JButton("Salvar");
-        JButton excluir = new JButton("Excluir");
-
-        JPanel botoes = new JPanel();
-
-        botoes.add(incluir);
-        botoes.add(salvar);
-        botoes.add(excluir);
-
-        add(botoes, BorderLayout.SOUTH);
-
-        incluir.addActionListener(e -> incluir());
-        salvar.addActionListener(e -> salvar());
-        excluir.addActionListener(e -> excluir());
-
-        reposicaoTable.getSelectionModel().addListSelectionListener(
-                e -> {
-                    if (!e.getValueIsAdjusting())
-                        carregarSelecionada();
-                }
-        );
-
-        custorepSpinner.addChangeListener(e -> total());
-        outrosgastSpinner.addChangeListener(e -> total());
-    }
-
-    private JSpinner decimal() {
-        JSpinner s = new JSpinner(
-                new SpinnerNumberModel(0.0, 0.0, null, 0.01)
-        );
-
-        s.setEditor(new JSpinner.NumberEditor(s, "0.00"));
-
-        return s;
-    }
-
-    private JFormattedTextField criarData() {
-        try {
-            javax.swing.text.MaskFormatter m =
+            javax.swing.text.MaskFormatter mascara =
                     new javax.swing.text.MaskFormatter("##/##/####");
-
-            m.setPlaceholderCharacter('_');
-
-            return new JFormattedTextField(m);
-
+            mascara.setPlaceholderCharacter('_');
+            competenciaData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(mascara));
+            competenciaData.setValue(null);
         } catch (java.text.ParseException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException("Erro ao configurar a máscara.", e);
         }
+
+        gastosTotaisTexto.setEditable(false);
     }
 
     private LocalDate competencia() {
-        try {
-            return LocalDate.parse(
-                    competenciaData.getText(),
-                    DateTimeFormatter.ofPattern("dd/MM/uuuu")
-                            .withResolverStyle(ResolverStyle.STRICT)
-            );
-
-        } catch (DateTimeParseException e) {
-            throw new IllegalArgumentException(
-                    "Informe uma competência válida."
-            );
-        }
-    }
-
-    private double valor(JSpinner s) {
-        return ((Number) s.getValue()).doubleValue();
+        return LocalDate.parse(competenciaData.getText(), FORMATO_DATA);
     }
 
     private MateriaPrima materia() {
-        int i = matprimaBox.getSelectedIndex();
+        return materias.get(matprimaBox.getSelectedIndex());
+    }
 
-        return i >= 0 ? materias.get(i) : null;
+    /**
+     * gastos_totais = (quantidade × custo_reposicao) + outros_gastos
+     */
+    private double gastosTotais(double quantidade, double custoReposicao, double outrosGastos) {
+        return (quantidade * custoReposicao) + outrosGastos;
     }
 
     private void total() {
-        gastostotaisSpinner.setValue(
-                valor(custorepSpinner)
-                + valor(outrosgastSpinner)
-        );
-    }
+        double gastosTotais = gastosTotais(
+                Double.parseDouble(quantidadeTexto.getText()),
+                Double.parseDouble(custoReposicao.getText()),
+                Double.parseDouble(outrosGastosTexto.getText()));
 
-    private void carregarMaterias() throws SQLException {
-        materias = materiaDao.listarTodos();
-
-        matprimaBox.removeAllItems();
-
-        for (MateriaPrima m : materias)
-            matprimaBox.addItem(m.getNome());
+        gastosTotaisTexto.setText(String.valueOf(gastosTotais));
     }
 
     private MateriaPrima buscarMateria(int id) {
-        for (MateriaPrima m : materias)
-            if (m.getId() == id)
+        for (MateriaPrima m : materias) {
+            if (m.getId() == id) {
                 return m;
-
+            }
+        }
         return null;
     }
 
     private void selecionarMateria(int id) {
-        for (int i = 0; i < materias.size(); i++)
-            if (materias.get(i).getId() == id)
+        for (int i = 0; i < materias.size(); i++) {
+            if (materias.get(i).getId() == id) {
                 matprimaBox.setSelectedIndex(i);
+            }
+        }
     }
 
-    private void incluir() {
+    private void incluirBotaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_incluirBotaoActionPerformed
+        MateriaPrima m = materia();
+
+        PrevisaoReposicaoEstoque p = new PrevisaoReposicaoEstoque();
+        preencher(p, m);
+
         try {
-            MateriaPrima m = materia();
-
-            if (m == null)
-                throw new IllegalArgumentException(
-                        "Selecione uma matéria-prima."
-                );
-
-            PrevisaoReposicaoEstoque p =
-                    new PrevisaoReposicaoEstoque();
-
-            preencher(p, m);
-
             dao.inserir(p);
-
-            limpar();
+            JOptionPane.showMessageDialog(this, "Previsão cadastrada com sucesso!");
+            limparCampos();
             carregarTabela();
-
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Previsão cadastrada!"
-            );
-
-        } catch (SQLException | IllegalArgumentException e) {
-            erro(e);
-        }
-    }
-
-    private void salvar() {
-        if (selecionada == null) {
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Selecione um registro."
-            );
-            return;
-        }
-
-        try {
-            MateriaPrima m = materia();
-
-            if (m == null)
-                throw new IllegalArgumentException(
-                        "Selecione uma matéria-prima."
-                );
-
-            preencher(selecionada, m);
-
-            dao.alterar(selecionada);
-
-            limpar();
-            carregarTabela();
-
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Previsão atualizada!"
-            );
-
-        } catch (SQLException | IllegalArgumentException e) {
-            erro(e);
-        }
-    }
-
-    private void preencher(
-            PrevisaoReposicaoEstoque p,
-            MateriaPrima m) {
-
-        p.setCompetencia(competencia());
-
-        p.setSequencia(
-                ((Number) sequenciaSpinner.getValue()).intValue()
-        );
-
-        p.setIdMateriaPrima(m.getId());
-        p.setQuantidade(valor(quantidadeSpinner));
-        p.setCustoReposicao(valor(custorepSpinner));
-        p.setOutrosGastos(valor(outrosgastSpinner));
-    }
-
-    private void excluir() {
-        int linha = reposicaoTable.getSelectedRow();
-
-        if (linha < 0) {
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Selecione um registro."
-            );
-            return;
-        }
-
-        try {
-            PrevisaoReposicaoEstoque p =
-                    previsoes.get(linha);
-
-            dao.excluir(p.getId());
-
-            limpar();
-            carregarTabela();
-
         } catch (SQLException e) {
-            erro(e);
+            JOptionPane.showMessageDialog(this, "Erro ao cadastrar: " + e.getMessage());
         }
-    }
+    }//GEN-LAST:event_incluirBotaoActionPerformed
 
-    private void carregarSelecionada() {
+    private void atualizarBotaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atualizarBotaoActionPerformed
         int linha = reposicaoTable.getSelectedRow();
 
-        if (linha < 0)
-            return;
+        PrevisaoReposicaoEstoque p = previsoes.get(linha);
+        preencher(p, materia());
 
-        selecionada = previsoes.get(linha);
+        try {
+            dao.alterar(p);
+            JOptionPane.showMessageDialog(this, "Previsão atualizada com sucesso!");
+            carregarTabela();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Erro ao atualizar: " + e.getMessage());
+        }
+    }//GEN-LAST:event_atualizarBotaoActionPerformed
 
-        competenciaData.setText(
-                selecionada.getCompetencia().format(
-                        DateTimeFormatter.ofPattern("dd/MM/yyyy")
-                )
-        );
+    private void preencher(PrevisaoReposicaoEstoque p, MateriaPrima m) {
+        p.setCompetencia(competencia());
+        p.setSequencia(Integer.parseInt(sequenciaTexto.getText()));
+        p.setIdMateriaPrima(m.getId());
+        p.setQuantidade(Double.parseDouble(quantidadeTexto.getText()));
+        p.setCustoReposicao(Double.parseDouble(custoReposicao.getText()));
+        p.setOutrosGastos(Double.parseDouble(outrosGastosTexto.getText()));
+    }
 
-        sequenciaSpinner.setValue(
-                selecionada.getSequencia()
-        );
+    private void excluirBotaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirBotaoActionPerformed
+        int linha = reposicaoTable.getSelectedRow();
 
-        selecionarMateria(
-                selecionada.getIdMateriaPrima()
-        );
+        PrevisaoReposicaoEstoque p = previsoes.get(linha);
+        int id = p.getId();
 
-        quantidadeSpinner.setValue(
-                selecionada.getQuantidade()
-        );
+        try {
+            dao.excluir(id);
+            JOptionPane.showMessageDialog(this, "Previsão excluída com sucesso!");
+            limparCampos();
+            carregarTabela();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Erro ao excluir: " + e.getMessage());
+        }
+    }//GEN-LAST:event_excluirBotaoActionPerformed
 
-        custorepSpinner.setValue(
-                selecionada.getCustoReposicao()
-        );
+    private void reposicaoTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reposicaoTableMouseClicked
+        int linha = reposicaoTable.getSelectedRow();
 
-        outrosgastSpinner.setValue(
-                selecionada.getOutrosGastos()
-        );
+        PrevisaoReposicaoEstoque p = previsoes.get(linha);
+        competenciaData.setText(p.getCompetencia().format(FORMATO_DATA));
+        sequenciaTexto.setText(String.valueOf(p.getSequencia()));
+        selecionarMateria(p.getIdMateriaPrima());
+        quantidadeTexto.setText(String.valueOf(p.getQuantidade()));
+        custoReposicao.setText(String.valueOf(p.getCustoReposicao()));
+        outrosGastosTexto.setText(String.valueOf(p.getOutrosGastos()));
 
         total();
+    }//GEN-LAST:event_reposicaoTableMouseClicked
+
+    private void carregarMaterias() {
+        try {
+            materias = materiaDao.listarTodos();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Erro ao carregar as matérias-primas: " + e.getMessage());
+            return;
+        }
+
+        matprimaBox.removeAllItems();
+        for (MateriaPrima m : materias) {
+            matprimaBox.addItem(m.getNome());
+        }
     }
 
-    private void carregarTabela() throws SQLException {
-        previsoes = dao.listarTodos();
+    public void carregarTabela() {
+        try {
+            previsoes = dao.listarTodos();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Erro ao carregar a tabela: " + e.getMessage());
+            return;
+        }
 
-        DefaultTableModel model =
-                (DefaultTableModel) reposicaoTable.getModel();
-
+        DefaultTableModel model = (DefaultTableModel) reposicaoTable.getModel();
         model.setRowCount(0);
-
-        DateTimeFormatter f =
-                DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
         for (PrevisaoReposicaoEstoque p : previsoes) {
-
-            MateriaPrima m =
-                    buscarMateria(p.getIdMateriaPrima());
+            MateriaPrima m = buscarMateria(p.getIdMateriaPrima());
 
             model.addRow(new Object[]{
-                p.getCompetencia().format(f),
+                p.getCompetencia().format(FORMATO_DATA),
                 p.getSequencia(),
-                m != null ? m.getId() : null,
-                m != null ? m.getNome() : "",
+                m.getId(),
+                m.getNome(),
                 p.getQuantidade(),
                 p.getCustoReposicao(),
                 p.getOutrosGastos(),
-                p.getCustoReposicao()
-                    + p.getOutrosGastos()
+                gastosTotais(p.getQuantidade(), p.getCustoReposicao(), p.getOutrosGastos())
             });
         }
     }
 
-    private void limpar() {
+    private void limparCampos() {
         competenciaData.setValue(null);
-        sequenciaSpinner.setValue(0);
-        quantidadeSpinner.setValue(0.0);
-        custorepSpinner.setValue(0.0);
-        outrosgastSpinner.setValue(0.0);
-        gastostotaisSpinner.setValue(0.0);
-
-        if (matprimaBox.getItemCount() > 0)
-            matprimaBox.setSelectedIndex(0);
+        sequenciaTexto.setText("");
+        quantidadeTexto.setText("");
+        custoReposicao.setText("");
+        outrosGastosTexto.setText("");
+        gastosTotaisTexto.setText("");
+        matprimaBox.setSelectedIndex(0);
 
         reposicaoTable.clearSelection();
-        selecionada = null;
     }
-
-    private void erro(Exception e) {
-        JOptionPane.showMessageDialog(
-                this,
-                "Erro: " + e.getMessage()
-        );
-    }
-
-    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
@@ -426,22 +234,22 @@ public class CadastroPrevisaoReposicaoEstoque extends JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         competenciaData = new javax.swing.JFormattedTextField();
         jLabel2 = new javax.swing.JLabel();
-        sequenciaSpinner = new javax.swing.JSpinner();
         matprimaBox = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        quantidadeSpinner = new javax.swing.JSpinner();
         jScrollPane2 = new javax.swing.JScrollPane();
         reposicaoTable = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
-        custorepSpinner = new javax.swing.JSpinner();
         jLabel8 = new javax.swing.JLabel();
-        outrosgastSpinner = new javax.swing.JSpinner();
         jLabel9 = new javax.swing.JLabel();
-        gastostotaisSpinner = new javax.swing.JSpinner();
-        jButton1 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        incluirBotao = new javax.swing.JButton();
+        atualizarBotao = new javax.swing.JButton();
+        excluirBotao = new javax.swing.JButton();
+        quantidadeTexto = new javax.swing.JTextField();
+        custoReposicao = new javax.swing.JTextField();
+        outrosGastosTexto = new javax.swing.JTextField();
+        gastosTotaisTexto = new javax.swing.JTextField();
+        sequenciaTexto = new javax.swing.JTextField();
 
         jButton19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/mais.png"))); // NOI18N
 
@@ -505,21 +313,29 @@ public class CadastroPrevisaoReposicaoEstoque extends JInternalFrame {
                 return types [columnIndex];
             }
         });
+        reposicaoTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                reposicaoTableMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(reposicaoTable);
 
-        jLabel5.setText("Custo de Reposição(R$)");
+        jLabel5.setText("Custo de Reposição (R$)");
 
         jLabel8.setText("Outros Gastos(R$)");
 
         jLabel9.setText("Gastos Totais (R$)");
 
-        jButton1.setText("Incluir");
-        jButton1.addActionListener(this::jButton1ActionPerformed);
+        incluirBotao.setText("Incluir");
+        incluirBotao.addActionListener(this::incluirBotaoActionPerformed);
 
-        jButton3.setText("Salvar");
-        jButton3.addActionListener(this::jButton3ActionPerformed);
+        atualizarBotao.setText("Atualizar");
+        atualizarBotao.addActionListener(this::atualizarBotaoActionPerformed);
 
-        jButton5.setText("Excluir");
+        excluirBotao.setText("Excluir");
+        excluirBotao.addActionListener(this::excluirBotaoActionPerformed);
+
+        gastosTotaisTexto.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -528,44 +344,43 @@ public class CadastroPrevisaoReposicaoEstoque extends JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(matprimaBox, javax.swing.GroupLayout.PREFERRED_SIZE, 637, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(competenciaData, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(sequenciaTexto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel3)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(incluirBotao)
+                                .addGap(18, 18, 18)
+                                .addComponent(atualizarBotao)
+                                .addGap(18, 18, 18)
+                                .addComponent(excluirBotao)))
+                        .addContainerGap(114, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
-                            .addComponent(quantidadeSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(quantidadeTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(43, 43, 43)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
-                            .addComponent(custorepSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                            .addComponent(custoReposicao, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(outrosgastSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                            .addComponent(jLabel8)
+                            .addComponent(outrosGastosTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(gastostotaisSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel9)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(matprimaBox, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 637, Short.MAX_VALUE)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(competenciaData, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel2)
-                                        .addComponent(sequenciaSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton1)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton3)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton5)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                            .addComponent(jLabel9)
+                            .addComponent(gastosTotaisTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(27, 27, 27))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -577,33 +392,31 @@ public class CadastroPrevisaoReposicaoEstoque extends JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(competenciaData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(sequenciaSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(sequenciaTexto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(7, 7, 7)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(matprimaBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel9))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(quantidadeSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(custorepSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(outrosgastSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(gastostotaisSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton3)
-                    .addComponent(jButton5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(quantidadeTexto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(custoReposicao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(outrosGastosTexto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(gastosTotaisTexto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(atualizarBotao)
+                        .addComponent(excluirBotao))
+                    .addComponent(incluirBotao, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -618,20 +431,14 @@ public class CadastroPrevisaoReposicaoEstoque extends JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_matprimaBoxActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton atualizarBotao;
     private javax.swing.JFormattedTextField competenciaData;
-    private javax.swing.JSpinner custorepSpinner;
-    private javax.swing.JSpinner gastostotaisSpinner;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JTextField custoReposicao;
+    private javax.swing.JButton excluirBotao;
+    private javax.swing.JTextField gastosTotaisTexto;
+    private javax.swing.JButton incluirBotao;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
@@ -642,9 +449,7 @@ public class CadastroPrevisaoReposicaoEstoque extends JInternalFrame {
     private javax.swing.JButton jButton19;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton20;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton30;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -656,11 +461,11 @@ public class CadastroPrevisaoReposicaoEstoque extends JInternalFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JComboBox<String> matprimaBox;
-    private javax.swing.JSpinner outrosgastSpinner;
-    private javax.swing.JSpinner quantidadeSpinner;
+    private javax.swing.JTextField outrosGastosTexto;
+    private javax.swing.JTextField quantidadeTexto;
     private javax.swing.JTable reposicaoTable;
-    private javax.swing.JSpinner sequenciaSpinner;
     private javax.swing.JSpinner sequenciaSpinner3;
     private javax.swing.JSpinner sequenciaSpinner4;
+    private javax.swing.JTextField sequenciaTexto;
     // End of variables declaration//GEN-END:variables
 }
