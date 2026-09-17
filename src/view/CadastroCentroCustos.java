@@ -7,12 +7,10 @@ package view;
 
 import dao.CentroCustoDAO;
 import dao.DataSource;
-import javax.swing.JOptionPane;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.CentroCusto;
 
@@ -21,12 +19,14 @@ import model.CentroCusto;
  * @author natal
  */
 public class CadastroCentroCustos extends javax.swing.JInternalFrame {
-    
+
+    private List<CentroCusto> centrosCusto = new ArrayList<>();
+    private CentroCustoDAO dao = new CentroCustoDAO(new DataSource());
 
     /**
      * Creates new form CadastroInvestimentoFixo
      */
-    public CadastroCentroCustos() throws SQLException {
+    public CadastroCentroCustos() {
         initComponents();
         carregarTabela();
     }
@@ -98,6 +98,7 @@ public class CadastroCentroCustos extends javax.swing.JInternalFrame {
         atualizarBotao.addActionListener(this::atualizarBotaoActionPerformed);
 
         excluirBotao.setText("Excluir");
+        excluirBotao.addActionListener(this::excluirBotaoActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -199,70 +200,79 @@ public class CadastroCentroCustos extends javax.swing.JInternalFrame {
     private void incluirBotaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_incluirBotaoActionPerformed
         String nome = nomeTexto.getText();
         int horasEfetivas = Integer.parseInt(horasEfetivasTexto.getText());
-        
-        DataSource dataSource = new DataSource();
-        CentroCustoDAO dao = new CentroCustoDAO(dataSource);
+
         CentroCusto centroCusto = new CentroCusto(nome, horasEfetivas);
-        
+
         try {
-        dao.inserir(centroCusto);
-        JOptionPane.showMessageDialog(this, "Centro de custo cadastrado com sucesso!");
-        limparCampos();
-        carregarTabela();
+            dao.inserir(centroCusto);
+            JOptionPane.showMessageDialog(this, "Centro de custo cadastrado com sucesso!");
+            limparCampos();
+            carregarTabela();
         } catch (SQLException e) {
-        JOptionPane.showMessageDialog(this, "Erro ao cadastrar: " + e.getMessage());
-}
+            JOptionPane.showMessageDialog(this, "Erro ao cadastrar: " + e.getMessage());
+        }
     }//GEN-LAST:event_incluirBotaoActionPerformed
 
     private void atualizarBotaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atualizarBotaoActionPerformed
-       DataSource dataSource = new DataSource();
-       CentroCustoDAO dao = new CentroCustoDAO(dataSource);
-       int linha = tabela.getSelectedRow();
-       CentroCusto c = centroCusto.get(linha);
-       
-       c.setNome(nomeTexto.getText());
-       c.setHorasEfetivas(Integer.parseInt(horasEfetivasTexto.getText()));
-        
-        
+        int linha = tabela.getSelectedRow();
+
+        CentroCusto c = centrosCusto.get(linha);
+        c.setNome(nomeTexto.getText());
+        c.setHorasEfetivas(Integer.parseInt(horasEfetivasTexto.getText()));
+
         try {
-        dao.alterar(c);
-        JOptionPane.showMessageDialog(this, "Centro de custo atualizado com sucesso!");
-        carregarTabela();
+            dao.alterar(c);
+            JOptionPane.showMessageDialog(this, "Centro de custo atualizado com sucesso!");
+            carregarTabela();
         } catch (SQLException e) {
-        JOptionPane.showMessageDialog(this, "Erro ao atualizar: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Erro ao atualizar: " + e.getMessage());
         }
     }//GEN-LAST:event_atualizarBotaoActionPerformed
 
+    private void excluirBotaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirBotaoActionPerformed
+        int linha = tabela.getSelectedRow();
+
+        CentroCusto c = centrosCusto.get(linha);
+        int id = c.getId();
+
+        try {
+            dao.excluir(id);
+            JOptionPane.showMessageDialog(this, "Centro de custo excluído com sucesso!");
+            limparCampos();
+            carregarTabela();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Erro ao excluir: " + e.getMessage());
+        }
+    }//GEN-LAST:event_excluirBotaoActionPerformed
+
     private void tabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMouseClicked
-         int linha = tabela.getSelectedRow();
-        
-        CentroCusto c = centroCusto.get(linha);
+        int linha = tabela.getSelectedRow();
+
+        CentroCusto c = centrosCusto.get(linha);
         nomeTexto.setText(c.getNome());
         horasEfetivasTexto.setText(String.valueOf(c.getHorasEfetivas()));
-        
     }//GEN-LAST:event_tabelaMouseClicked
-    List<CentroCusto> centroCusto = new ArrayList<>();
+
+    public void carregarTabela() {
+        try {
+            centrosCusto = dao.listarTodos();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Erro ao carregar a tabela: " + e.getMessage());
+            return;
+        }
+
+        DefaultTableModel model = (DefaultTableModel) tabela.getModel();
+        model.setRowCount(0);
+        for (CentroCusto c : centrosCusto) {
+            model.addRow(new Object[]{
+                c.getNome(), c.getHorasEfetivas()
+            });
+        }
+    }
 
     private void limparCampos() {
         nomeTexto.setText("");
         horasEfetivasTexto.setText("");
-    }
-    
-    public void carregarTabela() throws SQLException{
-       DataSource dataSource = new DataSource();
-       CentroCustoDAO dao = new CentroCustoDAO(dataSource);
-       
-       centroCusto = dao.listarTodos();
-       DefaultTableModel model = (DefaultTableModel) tabela.getModel();
-       model.setRowCount(0);
-       for(CentroCusto c : centroCusto){
-           model.addRow(new Object[]{
-               c.getNome(), c.getHorasEfetivas()
-           });
-       }
-       
-       
-       
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton atualizarBotao;

@@ -26,7 +26,7 @@ public class CadastroMateriaPrima extends javax.swing.JInternalFrame {
     /**
      * Creates new form CadastroProdutosPrimarios
      */
-    public CadastroMateriaPrima() throws SQLException {
+    public CadastroMateriaPrima() {
         initComponents();
         carregarTabela();
     }
@@ -286,8 +286,13 @@ public class CadastroMateriaPrima extends javax.swing.JInternalFrame {
         custoReposicaoTexto.setText(String.valueOf(m.getCustoReposicao()));
     }//GEN-LAST:event_tabelaMouseClicked
 
-    public void carregarTabela() throws SQLException {
-        materiasPrimas = dao.listarTodos();
+    public void carregarTabela() {
+        try {
+            materiasPrimas = dao.listarTodos();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Erro ao carregar a tabela: " + e.getMessage());
+            return;
+        }
 
         DefaultTableModel model = (DefaultTableModel) tabela.getModel();
         model.setRowCount(0);

@@ -26,7 +26,7 @@ public class CadastroContasGastosGerais extends javax.swing.JInternalFrame {
     /**
      * Creates new form CadastroInvestimentoFixo
      */
-    public CadastroContasGastosGerais() throws SQLException {
+    public CadastroContasGastosGerais() {
         initComponents();
         carregarTabela();
     }
@@ -231,8 +231,13 @@ public class CadastroContasGastosGerais extends javax.swing.JInternalFrame {
         nomeTexto.setText(g.getNomeConta());
     }//GEN-LAST:event_jTable1MouseClicked
 
-    public void carregarTabela() throws SQLException {
-        gastosGerais = dao.listarTodos();
+    public void carregarTabela() {
+        try {
+            gastosGerais = dao.listarTodos();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Erro ao carregar a tabela: " + e.getMessage());
+            return;
+        }
 
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
